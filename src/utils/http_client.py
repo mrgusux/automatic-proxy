@@ -16,10 +16,7 @@ from src.utils.rate_limiter import TokenBucket
 
 logger = logging.getLogger(__name__)
 
-
 class HttpClient:
-    """Thin wrapper around aiohttp with retries, timeout and rate limiting."""
-
     def __init__(
         self,
         timeout: float = 20.0,
@@ -27,7 +24,6 @@ class HttpClient:
         backoff: float = 0.5,
         rate_limiter: Optional[TokenBucket] = None,
     ) -> None:
-        # Ensure values are safely parsed
         self._timeout = aiohttp.ClientTimeout(total=float(timeout))
         self._max_retries = int(max_retries)
         self._backoff = float(backoff)
@@ -35,12 +31,13 @@ class HttpClient:
         self._session: Optional[aiohttp.ClientSession] = None
 
     async def __aenter__(self) -> "HttpClient":
-        # BULLETPROOF CONNECTOR: Disable strict SSL and force IPv4 
-        # This fixes GitHub Actions instant network rejection & SSL expired bugs
+        # FIXED: Bypass aiodns bug on GitHub Actions & disable strict SSL
+        resolver = aiohttp.ThreadedResolver()
         connector = aiohttp.TCPConnector(
+            resolver=resolver,
             ssl=False, 
             family=socket.AF_INET,
-            limit=0  # Remove strict connection limits per host
+            limit=0
         )
         self._session = aiohttp.ClientSession(
             connector=connector,
@@ -62,32 +59,27 @@ class HttpClient:
     async def get_text(
         self, url: str, headers: Optional[dict[str, str]] = None
     ) -> str:
-        """GET a URL and return the body text, retrying on transient errors."""
         if self._session is None:
             raise RuntimeError("HttpClient must be used as an async context manager")
 
-        # SAFETY CHECK: Ensure headers is strictly a dictionary to prevent TypeError crashes
         safe_headers = headers if isinstance(headers, dict) else {}
-
         last_exc: Exception | None = None
+        
         for attempt in range(1, self._max_retries + 1):
-            if self._rate_limiter is not None:
-                await self._rate_limiter.acquire()
             try:
+                # FIXED: Rate limiter acquire moved inside TRY block
+                if self._rate_limiter is not None:
+                    await self._rate_limiter.acquire()
+                    
                 async with self._session.get(url, headers=safe_headers) as resp:
                     resp.raise_for_status()
                     return await resp.text()
-            except Exception as exc:  # Catch ALL exceptions to prevent instant silent crashes
+            except Exception as exc:
                 last_exc = exc
                 base = self._backoff * (2 ** (attempt - 1))
-                wait = random.uniform(0, base)  # full jitter
-                logger.debug(
-                    "GET %s failed (attempt %d/%d): %s",
-                    url,
-                    attempt,
-                    self._max_retries,
-                    exc,
-                )
+                wait = random.uniform(0, base)
                 await asyncio.sleep(wait)
                 
-        raise RuntimeError(f"GET {url} failed after {self._max_retries} retries: {last_exc}")
+        # Force the error into the logs so we can see it
+        logger.error(f"Failed to fetch {url} after {self._max_retries} attempts. Error: {last_exc}")
+        raise RuntimeError(f"GET {url} failed: {last_exc}")
