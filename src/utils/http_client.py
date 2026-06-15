@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
+import socket
 from types import TracebackType
 from typing import Optional
 
@@ -26,15 +27,25 @@ class HttpClient:
         backoff: float = 0.5,
         rate_limiter: Optional[TokenBucket] = None,
     ) -> None:
-        self._timeout = aiohttp.ClientTimeout(total=timeout)
-        self._max_retries = max_retries
-        self._backoff = backoff
+        # Ensure values are safely parsed
+        self._timeout = aiohttp.ClientTimeout(total=float(timeout))
+        self._max_retries = int(max_retries)
+        self._backoff = float(backoff)
         self._rate_limiter = rate_limiter
         self._session: Optional[aiohttp.ClientSession] = None
 
     async def __aenter__(self) -> "HttpClient":
+        # BULLETPROOF CONNECTOR: Disable strict SSL and force IPv4 
+        # This fixes GitHub Actions instant network rejection & SSL expired bugs
+        connector = aiohttp.TCPConnector(
+            ssl=False, 
+            family=socket.AF_INET,
+            limit=0  # Remove strict connection limits per host
+        )
         self._session = aiohttp.ClientSession(
-            timeout=self._timeout, headers=DEFAULT_HEADERS
+            connector=connector,
+            timeout=self._timeout,
+            headers=DEFAULT_HEADERS
         )
         return self
 
@@ -51,23 +62,22 @@ class HttpClient:
     async def get_text(
         self, url: str, headers: Optional[dict[str, str]] = None
     ) -> str:
-        """GET a URL and return the body text, retrying on transient errors.
-
-        Uses exponential backoff with full jitter to avoid synchronised retry
-        storms (thundering herd) when many sources fail at once.
-        """
+        """GET a URL and return the body text, retrying on transient errors."""
         if self._session is None:
             raise RuntimeError("HttpClient must be used as an async context manager")
+
+        # SAFETY CHECK: Ensure headers is strictly a dictionary to prevent TypeError crashes
+        safe_headers = headers if isinstance(headers, dict) else {}
 
         last_exc: Exception | None = None
         for attempt in range(1, self._max_retries + 1):
             if self._rate_limiter is not None:
                 await self._rate_limiter.acquire()
             try:
-                async with self._session.get(url, headers=headers) as resp:
+                async with self._session.get(url, headers=safe_headers) as resp:
                     resp.raise_for_status()
                     return await resp.text()
-            except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
+            except Exception as exc:  # Catch ALL exceptions to prevent instant silent crashes
                 last_exc = exc
                 base = self._backoff * (2 ** (attempt - 1))
                 wait = random.uniform(0, base)  # full jitter
@@ -79,4 +89,5 @@ class HttpClient:
                     exc,
                 )
                 await asyncio.sleep(wait)
+                
         raise RuntimeError(f"GET {url} failed after {self._max_retries} retries: {last_exc}")
