@@ -1,9 +1,9 @@
 name: 01 - Main Orchestrator
 
 on:
+  workflow_dispatch:
   schedule:
-    # Runs every 3 hours.
-    - cron: "0 */3 * * *"
+    - cron: '47 */3 * * *'
   workflow_dispatch: {}
 
 permissions:
