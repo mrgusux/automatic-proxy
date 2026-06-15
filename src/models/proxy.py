@@ -1,3 +1,5 @@
+### File: src/models/proxy.py
+
 """Strict Pydantic schema for a proxy record."""
 
 from __future__ import annotations
@@ -23,6 +25,10 @@ class Proxy(BaseModel):
     is_alive: bool = False
     latency_ms: Optional[float] = None
     anonymity: AnonymityLevel = AnonymityLevel.UNKNOWN
+
+    # --- NEW: Advanced Features (Software & Keep-Alive) ---
+    software: Optional[str] = None
+    keep_alive: bool = False
 
     # Enrichment data.
     country_code: Optional[str] = None
