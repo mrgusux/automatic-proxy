@@ -1,0 +1,32 @@
+# Strict validation thresholds and rules.
+# Consumed by the 5-dimensional verification engine.
+
+liveliness:
+  # Drop any proxy whose TCP handshake exceeds this (seconds).
+  tcp_timeout: 5.0
+
+latency:
+  # Maximum acceptable round-trip time in milliseconds.
+  max_latency_ms: 8000.0
+  # Latency buckets for quality scoring (ms).
+  excellent_below: 500
+  good_below: 1500
+  acceptable_below: 4000
+
+anonymity:
+  # Minimum acceptable level: transparent | anonymous | elite
+  minimum_level: transparent
+
+protocol:
+  detect_order:
+    - https
+    - http
+    - socks5
+    - socks4
+
+scoring:
+  # Quality score weights (must sum to 100).
+  weight_latency: 40
+  weight_anonymity: 35
+  weight_protocol: 15
+  weight_clean_blacklist: 10

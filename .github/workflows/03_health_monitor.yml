@@ -1,0 +1,48 @@
+name: 03 - Health Monitor
+
+on:
+  schedule:
+    - cron: "30 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  monitor:
+    name: Source health check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Evaluate source health report
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          report = Path("outputs/metadata/source_health_report.json")
+          if not report.exists():
+              print("No health report yet; skipping.")
+              sys.exit(0)
+          data = json.loads(report.read_text())
+          failed = [s for s in data.get("sources", []) if not s.get("success")]
+          print(f"Failed sources: {len(failed)}")
+          for s in failed:
+              print(f"  - {s['name']}: {s.get('error')}")
+          # Fail the job if more than half the sources are down.
+          total = len(data.get("sources", [])) or 1
+          if len(failed) / total > 0.5:
+              print("::error::More than 50% of sources are failing")
+              sys.exit(1)
+          PY

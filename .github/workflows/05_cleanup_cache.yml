@@ -1,0 +1,28 @@
+name: 05 - Cleanup Cache
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    name: Purge old workflow caches
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete caches older than 7 days
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh extension install actions/gh-actions-cache || true
+          echo "Listing caches for $REPO"
+          gh actions-cache list -R "$REPO" --limit 100 || true
+          # Delete caches with the oldest keys (best-effort).
+          for key in $(gh actions-cache list -R "$REPO" --limit 100 --sort last-used --order asc | awk '{print $1}' | head -n 20); do
+            echo "Deleting cache: $key"
+            gh actions-cache delete "$key" -R "$REPO" --confirm || true
+          done

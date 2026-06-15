@@ -1,0 +1,450 @@
+# Central registry of public proxy sources.
+# scraper_type: one of html_table | json_api | github_raw | regex_text
+#
+# Every source listed here publishes FREELY and PUBLICLY shared proxy lists.
+# Sources are grouped by provider. Disable any source by setting `enabled: false`.
+# Add new ones with: python scripts/add_new_source.py
+
+sources:
+  # ------------------------------------------------------------------
+  # ProxyScrape API (HTTP / SOCKS4 / SOCKS5)
+  # ------------------------------------------------------------------
+  - name: proxyscrape_http
+    url: https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: proxyscrape_socks4
+    url: https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: proxyscrape_socks5
+    url: https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks5&timeout=10000
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true
+
+  - name: proxyscrape_all_v4
+    url: https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&proxy_format=ipport&format=text
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # TheSpeedX / PROXY-List
+  # ------------------------------------------------------------------
+  - name: thespeedx_http
+    url: https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: thespeedx_socks4
+    url: https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: thespeedx_socks5
+    url: https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # monosans / proxy-list
+  # ------------------------------------------------------------------
+  - name: monosans_http
+    url: https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: monosans_socks4
+    url: https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: monosans_socks5
+    url: https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # clarketm / proxy-list
+  # ------------------------------------------------------------------
+  - name: clarketm_proxy_list
+    url: https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # jetkai / proxy-list (online checked)
+  # ------------------------------------------------------------------
+  - name: jetkai_http
+    url: https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: jetkai_https
+    url: https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-https.txt
+    scraper_type: github_raw
+    default_protocol: https
+    enabled: true
+
+  - name: jetkai_socks4
+    url: https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: jetkai_socks5
+    url: https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # ShiftyTR / Proxy-List
+  # ------------------------------------------------------------------
+  - name: shiftytr_http
+    url: https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: shiftytr_https
+    url: https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt
+    scraper_type: github_raw
+    default_protocol: https
+    enabled: true
+
+  - name: shiftytr_socks4
+    url: https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: shiftytr_socks5
+    url: https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # hookzof / socks5_list
+  # ------------------------------------------------------------------
+  - name: hookzof_socks5
+    url: https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # mmpx12 / proxy-list
+  # ------------------------------------------------------------------
+  - name: mmpx12_http
+    url: https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: mmpx12_https
+    url: https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt
+    scraper_type: github_raw
+    default_protocol: https
+    enabled: true
+
+  - name: mmpx12_socks4
+    url: https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: mmpx12_socks5
+    url: https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # sunny9577 / proxy-scraper
+  # ------------------------------------------------------------------
+  - name: sunny9577_proxy
+    url: https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # roosterkid / openproxylist
+  # ------------------------------------------------------------------
+  - name: roosterkid_https
+    url: https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt
+    scraper_type: regex_text
+    default_protocol: https
+    enabled: true
+
+  - name: roosterkid_socks4
+    url: https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: roosterkid_socks5
+    url: https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS5_RAW.txt
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # MuRongPIG / Proxy-Master
+  # ------------------------------------------------------------------
+  - name: murongpig_http
+    url: https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: murongpig_socks4
+    url: https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: murongpig_socks5
+    url: https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # proxifly / free-proxy-list
+  # ------------------------------------------------------------------
+  - name: proxifly_all
+    url: https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/all/data.txt
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: proxifly_http
+    url: https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/http/data.txt
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: proxifly_socks4
+    url: https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks4/data.txt
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: proxifly_socks5
+    url: https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks5/data.txt
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # zloi-user / hideip.me
+  # ------------------------------------------------------------------
+  - name: zloiuser_http
+    url: https://raw.githubusercontent.com/zloi-user/hideip.me/main/http.txt
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: zloiuser_https
+    url: https://raw.githubusercontent.com/zloi-user/hideip.me/main/https.txt
+    scraper_type: regex_text
+    default_protocol: https
+    enabled: true
+
+  - name: zloiuser_socks4
+    url: https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks4.txt
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: zloiuser_socks5
+    url: https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks5.txt
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # Anonym0usWork1221 / Free-Proxies
+  # ------------------------------------------------------------------
+  - name: anonymouswork_http
+    url: https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/http_proxies.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: anonymouswork_socks4
+    url: https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks4_proxies.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: anonymouswork_socks5
+    url: https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks5_proxies.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # yemixzy / proxy-list
+  # ------------------------------------------------------------------
+  - name: yemixzy_http
+    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: yemixzy_socks4
+    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: yemixzy_socks5
+    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # vakhov / fresh-proxy-list
+  # ------------------------------------------------------------------
+  - name: vakhov_http
+    url: https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: vakhov_https
+    url: https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/https.txt
+    scraper_type: github_raw
+    default_protocol: https
+    enabled: true
+
+  - name: vakhov_socks4
+    url: https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks4.txt
+    scraper_type: github_raw
+    default_protocol: socks4
+    enabled: true
+
+  - name: vakhov_socks5
+    url: https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # TuanMinPay / live-proxy
+  # ------------------------------------------------------------------
+  - name: tuanminpay_http
+    url: https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/http.txt
+    scraper_type: github_raw
+    default_protocol: http
+    enabled: true
+
+  - name: tuanminpay_socks5
+    url: https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/socks5.txt
+    scraper_type: github_raw
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # proxyspace.pro
+  # ------------------------------------------------------------------
+  - name: proxyspace_http
+    url: https://proxyspace.pro/http.txt
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: proxyspace_https
+    url: https://proxyspace.pro/https.txt
+    scraper_type: regex_text
+    default_protocol: https
+    enabled: true
+
+  - name: proxyspace_socks4
+    url: https://proxyspace.pro/socks4.txt
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: proxyspace_socks5
+    url: https://proxyspace.pro/socks5.txt
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # GeoNode public API (JSON, paginated)
+  # ------------------------------------------------------------------
+  - name: geonode_api
+    url: https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&sort_by=lastChecked&sort_type=desc
+    scraper_type: json_api
+    default_protocol: http
+    json_ip_field: ip
+    json_port_field: port
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # Free Proxy List aggregators (HTML tables)
+  # ------------------------------------------------------------------
+  - name: free_proxy_list_net
+    url: https://free-proxy-list.net/
+    scraper_type: html_table
+    default_protocol: http
+    enabled: true
+
+  - name: sslproxies_org
+    url: https://www.sslproxies.org/
+    scraper_type: html_table
+    default_protocol: https
+    enabled: true
+
+  - name: us_proxy_org
+    url: https://www.us-proxy.org/
+    scraper_type: html_table
+    default_protocol: http
+    enabled: true
+
+  - name: socks_proxy_net
+    url: https://www.socks-proxy.net/
+    scraper_type: html_table
+    default_protocol: socks5
+    enabled: true
+
+  # ------------------------------------------------------------------
+  # openproxylist.xyz API
+  # ------------------------------------------------------------------
+  - name: openproxylist_http
+    url: https://api.openproxylist.xyz/http.txt
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
+
+  - name: openproxylist_socks4
+    url: https://api.openproxylist.xyz/socks4.txt
+    scraper_type: regex_text
+    default_protocol: socks4
+    enabled: true
+
+  - name: openproxylist_socks5
+    url: https://api.openproxylist.xyz/socks5.txt
+    scraper_type: regex_text
+    default_protocol: socks5
+    enabled: true

@@ -1,0 +1,11 @@
+# Default code owners for the repository.
+* @maintainer
+
+# Scraping/collection layer.
+/src/collectors/ @maintainer
+
+# Validation engine.
+/src/validators/ @maintainer
+
+# CI/CD workflows.
+/.github/ @maintainer

@@ -1,0 +1,41 @@
+name: New source request
+description: Suggest a new public proxy source to add to the registry
+title: "[Source]: "
+labels: ["source-request"]
+body:
+  - type: input
+    id: source-url
+    attributes:
+      label: Source URL
+      description: The public URL of the proxy list.
+    validations:
+      required: true
+  - type: dropdown
+    id: scraper-type
+    attributes:
+      label: Scraper type
+      options:
+        - html_table
+        - json_api
+        - github_raw
+        - regex_text
+    validations:
+      required: true
+  - type: dropdown
+    id: protocol
+    attributes:
+      label: Default protocol
+      options:
+        - http
+        - https
+        - socks4
+        - socks5
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This source is publicly and freely shared.
+          required: true

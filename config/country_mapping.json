@@ -1,0 +1,17 @@
+{
+  "BD": { "name": "Bangladesh", "flag": "\ud83c\udde7\ud83c\udde9" },
+  "US": { "name": "United States", "flag": "\ud83c\uddfa\ud83c\uddf8" },
+  "GB": { "name": "United Kingdom", "flag": "\ud83c\uddec\ud83c\udde7" },
+  "DE": { "name": "Germany", "flag": "\ud83c\udde9\ud83c\uddea" },
+  "FR": { "name": "France", "flag": "\ud83c\uddeb\ud83c\uddf7" },
+  "IN": { "name": "India", "flag": "\ud83c\uddee\ud83c\uddf3" },
+  "CN": { "name": "China", "flag": "\ud83c\udde8\ud83c\uddf3" },
+  "RU": { "name": "Russia", "flag": "\ud83c\uddf7\ud83c\uddfa" },
+  "JP": { "name": "Japan", "flag": "\ud83c\uddef\ud83c\uddf5" },
+  "BR": { "name": "Brazil", "flag": "\ud83c\udde7\ud83c\uddf7" },
+  "CA": { "name": "Canada", "flag": "\ud83c\udde8\ud83c\udde6" },
+  "NL": { "name": "Netherlands", "flag": "\ud83c\uddf3\ud83c\uddf1" },
+  "SG": { "name": "Singapore", "flag": "\ud83c\uddf8\ud83c\uddec" },
+  "ID": { "name": "Indonesia", "flag": "\ud83c\uddee\ud83c\udde9" },
+  "XX": { "name": "Unknown", "flag": "\ud83c\udff3\ufe0f" }
+}

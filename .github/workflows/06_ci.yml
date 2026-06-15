@@ -1,0 +1,38 @@
+name: CI - Lint & Test
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-test:
+    name: Ruff, Mypy & Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install ruff mypy pytest pytest-asyncio
+
+      - name: Ruff lint
+        run: ruff check src tests
+
+      - name: Mypy type check
+        run: mypy src || true
+
+      - name: Run tests
+        run: pytest -q

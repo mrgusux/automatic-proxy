@@ -1,0 +1,19 @@
+services:
+  collector:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ../outputs:/app/outputs
+      - ../data:/app/data
+    command: ["run", "--log-level", "INFO"]
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]

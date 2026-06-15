@@ -1,0 +1,36 @@
+# Core system configuration.
+# All values are read by src/utils/config_loader.py into the Settings model.
+
+# Concurrency limits.
+scrape_concurrency: 50
+validate_concurrency: 500
+
+# Timeouts (seconds).
+scrape_timeout: 20.0
+tcp_timeout: 5.0
+validate_timeout: 10.0
+
+# Retry policy.
+max_retries: 3
+retry_backoff: 0.5
+
+# Token-bucket rate limiting (prevents IP bans).
+rate_limit_per_sec: 20.0
+rate_limit_burst: 40
+
+# Validation thresholds.
+max_latency_ms: 8000.0
+
+# Output.
+max_alive_output: 50000
+output_dir: outputs
+
+# GeoIP / cache paths.
+geoip_country_db: data/geoip/GeoLite2-Country.mmdb
+geoip_asn_db: data/geoip/GeoLite2-ASN.mmdb
+geo_cache_file: data/cache/geolocation_cache.json
+country_mapping_file: config/country_mapping.json
+
+# Enrichment toggles.
+enable_blacklist_check: true
+enable_asn_resolution: true

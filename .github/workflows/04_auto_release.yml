@@ -1,0 +1,35 @@
+name: 04 - Auto Release
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Tag & GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute date-based tag
+        id: tag
+        run: echo "tag=v$(date -u +'%Y.%m.%d-%H%M')" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: Proxy snapshot ${{ steps.tag.outputs.tag }}
+          body: |
+            Automated proxy snapshot.
+            See `outputs/metadata/manifest.json` for run statistics.
+          files: |
+            outputs/proxies.txt
+            outputs/metadata/manifest.json

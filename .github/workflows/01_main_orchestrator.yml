@@ -1,0 +1,47 @@
+name: 01 - Main Orchestrator
+
+on:
+  schedule:
+    # Runs every 3 hours.
+    - cron: "0 */3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: proxy-collector-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Collect, validate and export proxies
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run collector pipeline
+        run: python -m src.main run --log-level INFO
+
+      - name: Commit updated outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/
+          if git diff --staged --quiet; then
+            echo "No proxy changes to commit."
+          else
+            git commit -m "chore(data): update proxy lists [skip ci]"
+            git push
+          fi
