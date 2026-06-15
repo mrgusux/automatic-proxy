@@ -1,29 +1,30 @@
 {
-  "generated_at": "2026-06-15T15:35:09.726033+00:00",
-  "started_at": "2026-06-15T15:22:00.033072+00:00",
+  "generated_at": "2026-06-15T21:00:30.574238+00:00",
+  "started_at": "2026-06-15T20:45:25.712052+00:00",
   "summary": {
     "sources_total": 63,
     "sources_ok": 58,
     "sources_failed": 5,
-    "raw_collected": 388467,
-    "after_dedup": 117104,
-    "alive": 835,
-    "dead": 116269,
-    "average_latency_ms": 3651.12
+    "raw_collected": 395580,
+    "after_dedup": 122575,
+    "alive": 2703,
+    "dead": 119872,
+    "average_latency_ms": 3127.81
   },
   "distribution": {
     "by_protocol": {
-      "http": 235,
-      "socks5": 569,
-      "socks4": 31
+      "socks5": 2225,
+      "socks4": 114,
+      "http": 364
     },
     "by_anonymity": {
-      "elite": 409,
-      "anonymous": 7,
-      "transparent": 419
+      "elite": 1912,
+      "anonymous": 6,
+      "transparent": 785
     },
     "by_country": {
-      "ID": 2
+      "HK": 1,
+      "KR": 1
     }
   }
 }
