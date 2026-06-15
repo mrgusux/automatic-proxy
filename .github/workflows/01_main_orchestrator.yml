@@ -1,10 +1,9 @@
 name: 01 - Main Orchestrator
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: '47 */3 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
