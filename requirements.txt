@@ -1,6 +1,6 @@
 # Ultimate God-Tier Proxy Collector - Pinned dependencies
 aiohttp>=3.10.0
-aiohttp-socks>=0.9.0
+aiohttp-socks>=0.11.0
 pydantic==2.7.1
 pydantic-settings==2.2.1
 PyYAML==6.0.1
