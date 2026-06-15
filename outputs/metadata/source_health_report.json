@@ -1,0 +1,572 @@
+{
+  "generated_at": "2026-06-15T07:37:58.140744+00:00",
+  "sources": [
+    {
+      "name": "proxyscrape_http",
+      "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 7.61,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyscrape_socks4",
+      "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.51,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyscrape_socks5",
+      "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks5&timeout=10000",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.54,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyscrape_all_v4",
+      "url": "https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&proxy_format=ipport&format=text",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.56,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "thespeedx_http",
+      "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 7.29,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "thespeedx_socks4",
+      "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 6.6,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "thespeedx_socks5",
+      "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 6.69,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "monosans_http",
+      "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.55,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "monosans_socks4",
+      "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.73,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "monosans_socks5",
+      "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.86,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "clarketm_proxy_list",
+      "url": "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.1,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "jetkai_http",
+      "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.28,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "jetkai_https",
+      "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.48,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "jetkai_socks4",
+      "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.68,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "jetkai_socks5",
+      "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 5.09,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "shiftytr_http",
+      "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 5.2,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "shiftytr_https",
+      "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 5.33,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "shiftytr_socks4",
+      "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 5.44,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "shiftytr_socks5",
+      "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.5,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "hookzof_socks5",
+      "url": "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.73,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "mmpx12_http",
+      "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.97,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "mmpx12_https",
+      "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.13,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "mmpx12_socks4",
+      "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.38,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "mmpx12_socks5",
+      "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.58,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "sunny9577_proxy",
+      "url": "https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.76,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "roosterkid_https",
+      "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 3.99,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "roosterkid_socks4",
+      "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.01,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "roosterkid_socks5",
+      "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS5_RAW.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.03,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "murongpig_http",
+      "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.15,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "murongpig_socks4",
+      "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.28,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "murongpig_socks5",
+      "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.4,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxifly_all",
+      "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/all/data.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 4.61,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxifly_http",
+      "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/http/data.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1.33,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxifly_socks4",
+      "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks4/data.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1.6,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxifly_socks5",
+      "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks5/data.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1.8,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "zloiuser_http",
+      "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.01,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "zloiuser_https",
+      "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.26,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "zloiuser_socks4",
+      "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.47,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "zloiuser_socks5",
+      "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.65,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "anonymouswork_http",
+      "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/http_proxies.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 2.85,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "anonymouswork_socks4",
+      "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks4_proxies.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 397.09,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "anonymouswork_socks5",
+      "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks5_proxies.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 447.91,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "yemixzy_http",
+      "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 497.07,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "yemixzy_socks4",
+      "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 547.86,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "yemixzy_socks5",
+      "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 597.08,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "vakhov_http",
+      "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 647.8,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "vakhov_https",
+      "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1046.94,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "vakhov_socks4",
+      "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1096.93,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "vakhov_socks5",
+      "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 47.13,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "tuanminpay_http",
+      "url": "https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 97.93,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "tuanminpay_socks5",
+      "url": "https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 742.97,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyspace_http",
+      "url": "https://proxyspace.pro/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 893.57,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyspace_https",
+      "url": "https://proxyspace.pro/https.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 792.92,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyspace_socks4",
+      "url": "https://proxyspace.pro/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 842.75,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "proxyspace_socks5",
+      "url": "https://proxyspace.pro/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 943.05,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "geonode_api",
+      "url": "https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&sort_by=lastChecked&sort_type=desc",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 992.78,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "free_proxy_list_net",
+      "url": "https://free-proxy-list.net/",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 142.89,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "sslproxies_org",
+      "url": "https://www.sslproxies.org/",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 193.67,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "us_proxy_org",
+      "url": "https://www.us-proxy.org/",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 242.77,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "socks_proxy_net",
+      "url": "https://www.socks-proxy.net/",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 292.82,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "openproxylist_http",
+      "url": "https://api.openproxylist.xyz/http.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 343.67,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "openproxylist_socks4",
+      "url": "https://api.openproxylist.xyz/socks4.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 1143.3,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    },
+    {
+      "name": "openproxylist_socks5",
+      "url": "https://api.openproxylist.xyz/socks5.txt",
+      "success": false,
+      "proxies_found": 0,
+      "elapsed_ms": 693.0,
+      "error": "Channel.getaddrinfo() takes 3 positional arguments but 4 positional arguments (and 4 keyword-only arguments) were given",
+      "health_score": 0.0
+    }
+  ]
+}

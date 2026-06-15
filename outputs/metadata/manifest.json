@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-06-15T07:37:58.140744+00:00",
+  "started_at": "2026-06-15T07:37:56.987794+00:00",
+  "summary": {
+    "sources_total": 63,
+    "sources_ok": 0,
+    "sources_failed": 63,
+    "raw_collected": 0,
+    "after_dedup": 0,
+    "alive": 0,
+    "dead": 0,
+    "average_latency_ms": 0.0
+  },
+  "distribution": {
+    "by_protocol": {},
+    "by_anonymity": {},
+    "by_country": {}
+  }
+}
