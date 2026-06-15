@@ -1,8 +1,11 @@
-"""Dimension 3: anonymity classification (elite/anonymous/transparent)."""
+### File: src/validators/03_anonymity_check.py
+
+"""Dimension 3: anonymity classification (elite/anonymous/transparent) + Advanced Fingerprinting."""
 
 from __future__ import annotations
 
 import json
+import re
 
 import aiohttp
 
@@ -25,6 +28,16 @@ _PROXY_REVEAL_HEADERS = (
     "PROXY-CONNECTION",
 )
 
+# Software signatures to detect from response body/headers
+_SOFTWARE_SIGNATURES = {
+    r"squid": "Squid",
+    r"mikrotik": "MikroTik",
+    r"tinyproxy": "Tinyproxy",
+    r"litespeed": "LiteSpeed",
+    r"varnish": "Varnish",
+    r"haproxy": "HAProxy"
+}
+
 
 def _build_session(
     proxy: Proxy, timeout: float
@@ -42,21 +55,30 @@ def _build_session(
 async def check_anonymity(
     proxy: Proxy, real_ip: str | None, timeout: float = 10.0
 ) -> AnonymityLevel:
-    """Classify anonymity by inspecting what the echo endpoint reports.
-
-    - Transparent: our real IP is exposed.
-    - Anonymous: real IP hidden but proxy-identifying headers present.
-    - Elite: no leakage at all.
-    """
+    """Classify anonymity and detect proxy software / keep-alive support."""
     url = IP_CHECK_URLS[0]
     session, request_proxy = _build_session(proxy, timeout)
     try:
         async with session:
             async with session.get(url, proxy=request_proxy) as resp:
                 body = await resp.text()
+                headers = {k.lower(): v.lower() for k, v in resp.headers.items()}
     except Exception:  # noqa: BLE001
         return AnonymityLevel.UNKNOWN
 
+    # --- Feature 1: Keep-Alive Detection ---
+    connection_header = headers.get("connection", "")
+    if "keep-alive" in headers or "keep-alive" in connection_header:
+        proxy.keep_alive = True
+
+    # --- Feature 2: Proxy Software Detection ---
+    body_lower = body.lower()
+    for pattern, software_name in _SOFTWARE_SIGNATURES.items():
+        if re.search(pattern, body_lower) or re.search(pattern, str(headers)):
+            proxy.software = software_name
+            break
+
+    # --- Original Anonymity Detection ---
     body_upper = body.upper()
     if real_ip and real_ip in body:
         return AnonymityLevel.TRANSPARENT
