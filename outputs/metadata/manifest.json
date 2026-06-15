@@ -1,27 +1,29 @@
 {
-  "generated_at": "2026-06-15T08:13:24.138739+00:00",
-  "started_at": "2026-06-15T07:59:21.060540+00:00",
+  "generated_at": "2026-06-15T15:35:09.726033+00:00",
+  "started_at": "2026-06-15T15:22:00.033072+00:00",
   "summary": {
     "sources_total": 63,
-    "sources_ok": 56,
-    "sources_failed": 7,
-    "raw_collected": 380378,
-    "after_dedup": 116895,
-    "alive": 973,
-    "dead": 115922,
-    "average_latency_ms": 3629.52
+    "sources_ok": 58,
+    "sources_failed": 5,
+    "raw_collected": 388467,
+    "after_dedup": 117104,
+    "alive": 835,
+    "dead": 116269,
+    "average_latency_ms": 3651.12
   },
   "distribution": {
     "by_protocol": {
-      "socks5": 788,
-      "http": 166,
-      "socks4": 19
+      "http": 235,
+      "socks5": 569,
+      "socks4": 31
     },
     "by_anonymity": {
-      "elite": 513,
-      "anonymous": 5,
-      "transparent": 455
+      "elite": 409,
+      "anonymous": 7,
+      "transparent": 419
     },
-    "by_country": {}
+    "by_country": {
+      "ID": 2
+    }
   }
 }
