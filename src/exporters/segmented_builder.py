@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 import logging
 from src.models.proxy import Proxy
-from src.exporters.atomic_writer import AtomicWriter
+from src.exporters.atomic_writer import atomic_write_text
 
 logger = logging.getLogger(__name__)
 
@@ -15,9 +15,8 @@ class SegmentedBuilder:
 
     def __init__(self, output_dir: str = "outputs") -> None:
         self._output_dir = output_dir
-        self._writer = AtomicWriter()
 
-    def export(self, proxies: list[Proxy]) -> None:
+    def export(self, proxies: list[Proxy], stats=None, health=None) -> None:
         """Group proxies by country and export them into structured folders and files."""
         # Step 1: Group all proxies by country code
         country_groups: dict[str, list[Proxy]] = {}
@@ -37,7 +36,8 @@ class SegmentedBuilder:
             main_filename = f"{country_code}_all.txt"
             main_file_path = os.path.join(country_folder, main_filename)
             main_lines = [f"{p.ip}:{p.port}" for p in country_proxies]
-            self._writer.write_lines(main_file_path, main_lines)
+            # Use atomic_write_text instead of AtomicWriter class
+            atomic_write_text(main_file_path, "\n".join(main_lines) + "\n")
 
             # 2. Group this country's proxies by protocol
             protocol_groups: dict[str, list[Proxy]] = {}
@@ -50,7 +50,7 @@ class SegmentedBuilder:
                 proto_filename = f"{proto_name}.txt"
                 proto_file_path = os.path.join(country_folder, proto_filename)
                 proto_lines = [f"{p.ip}:{p.port}" for p in proto_proxies]
-                self._writer.write_lines(proto_file_path, proto_lines)
+                atomic_write_text(proto_file_path, "\n".join(proto_lines) + "\n")
 
         logger.info("Successfully exported structured country folders for %d countries.", len(country_groups))
 
