@@ -16,14 +16,27 @@ venv/
 .coverage
 htmlcov/
 
-# Project runtime data (regenerated each run)
+# Project runtime data
 data/raw/*
 data/cache/*
 !data/raw/.gitkeep
 !data/cache/.gitkeep
 
-# GeoIP databases are large/licensed; fetched at runtime
+# GeoIP databases
 data/geoip/*.mmdb
+
+# Outputs (track only folder skeleton by default)
+outputs/**
+!outputs/
+!outputs/.gitkeep
+!outputs/by_country/
+!outputs/by_country/.gitkeep
+!outputs/by_protocol/
+!outputs/by_protocol/.gitkeep
+!outputs/by_anonymity/
+!outputs/by_anonymity/.gitkeep
+!outputs/metadata/
+!outputs/metadata/.gitkeep
 
 # OS
 .DS_Store
