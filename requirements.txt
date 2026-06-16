@@ -7,5 +7,6 @@ rich
 tenacity
 uvloop; platform_system != "Windows"
 pytest
+pytest-asyncio
 mypy
 ruff
