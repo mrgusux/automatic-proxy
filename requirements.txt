@@ -1,11 +1,11 @@
-# Ultimate God-Tier Proxy Collector - Pinned dependencies
-aiohttp>=3.10.0
-aiohttp-socks>=0.9.0
-pydantic==2.7.1
-pydantic-settings==2.2.1
-PyYAML==6.0.1
-aiodns==3.2.0
-geoip2==4.8.0
-rich==13.7.1
-tenacity==8.3.0
-uvloop==0.19.0 ; sys_platform != 'win32'
+aiohttp
+pydantic
+pydantic-settings
+PyYAML
+geoip2
+rich
+tenacity
+uvloop; platform_system != "Windows"
+pytest
+mypy
+ruff
