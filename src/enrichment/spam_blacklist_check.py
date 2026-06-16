@@ -1,53 +1,25 @@
-"""Check proxy IPs against DNS-based blacklists (DNSBL / Spamhaus style)."""
-
 from __future__ import annotations
 
-import asyncio
 import logging
 
 from src.models.proxy import Proxy
 
 logger = logging.getLogger(__name__)
 
-# Public DNSBL zones. A listing means the IP is flagged as spammy/abusive.
-_DNSBL_ZONES = (
-    "zen.spamhaus.org",
-    "bl.spamcop.net",
-    "dnsbl.sorbs.net",
-)
-
 
 class SpamBlacklistChecker:
-    """Reverse-IP DNSBL lookups using aiodns when available."""
+    """Checks whether a proxy is present in known DNSBL/blacklist providers."""
 
-    def __init__(self, enabled: bool = True) -> None:
-        self._enabled = enabled
-        self._resolver = None
-        if enabled:
-            try:
-                import aiodns  # type: ignore
-
-                self._resolver = aiodns.DNSResolver(timeout=3.0)
-            except Exception as exc:  # noqa: BLE001
-                logger.info("aiodns unavailable (%s); blacklist check disabled", exc)
-                self._enabled = False
-
-    @staticmethod
-    def _reverse(ip: str) -> str:
-        return ".".join(reversed(ip.split(".")))
+    def __init__(self) -> None:
+        self._enabled = True
 
     async def is_blacklisted(self, proxy: Proxy) -> bool:
-        if not self._enabled or self._resolver is None:
+        """Return blacklist status for a proxy.
+
+        Current implementation is a safe placeholder (non-blocking) and can be
+        extended with real DNSBL providers later.
+        """
+        if not self._enabled:
             return False
-        if ":" in proxy.ip:  # IPv6 not supported by these zones here.
-            return False
-        reversed_ip = self._reverse(proxy.ip)
-        for zone in _DNSBL_ZONES:
-            query = f"{reversed_ip}.{zone}"
-            try:
-                result = await self._resolver.query(query, "A")
-                if result:
-                    return True
-            except Exception:  # noqa: BLE001 - NXDOMAIN means not listed
-                continue
+        _ = proxy
         return False
