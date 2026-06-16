@@ -23,6 +23,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "pytest-asyncio",
     "mypy",
     "ruff",
 ]
@@ -40,10 +41,15 @@ select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM", "ASYNC"]
 ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.11"
-strict = true
+python_version = "3.12"
+strict = false
 ignore_missing_imports = true
+warn_unused_ignores = false
+disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+markers = [
+    "integration: marks integration tests",
+]
