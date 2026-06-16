@@ -1,4 +1,4 @@
-"""Build the master proxies.txt file + the top-level exporter orchestrator."""
+"""Build master output and delegate segmented and manifest exporters."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class MasterFileBuilder:
-    """Write the master best-proxies list and delegate segmented/manifest output."""
+    """Top-level exporter used by pipeline manager."""
 
     def __init__(self, output_dir: str) -> None:
         self._output_dir = Path(output_dir)
@@ -24,9 +24,10 @@ class MasterFileBuilder:
         self._manifest = JsonManifestBuilder(output_dir)
 
     def _write_master(self, proxies: list[Proxy]) -> None:
+        self._output_dir.mkdir(parents=True, exist_ok=True)
         lines = [p.line() for p in proxies]
         atomic_write_text(self._output_dir / "proxies.txt", "\n".join(lines) + "\n")
-        logger.info("Wrote master file with %d proxies", len(lines))
+        logger.info("Master proxies file written: %d lines", len(lines))
 
     def export(
         self,
