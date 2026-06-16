@@ -1,80 +1,165 @@
-### File: src/exporters/segmented_builder.py
-
-"""Segmented file builder: Dynamic country folders with advanced proxy features."""
+"""Segmented exporter for country/protocol/anonymity/software based outputs."""
 
 from __future__ import annotations
 
-import os
 import logging
-from src.models.proxy import Proxy
+import re
+import shutil
+from pathlib import Path
+
 from src.exporters.atomic_writer import atomic_write_text
+from src.models.proxy import Proxy
 
 logger = logging.getLogger(__name__)
 
 
 class SegmentedBuilder:
-    """Generates country-specific folders containing protocol files, software files, and keep-alive files."""
+    """Create structured output files grouped by country and categories."""
 
-    def __init__(self, output_dir: str = "outputs") -> None:
-        self._output_dir = output_dir
+    def __init__(self, output_dir: str = "outputs", country_mapping_path: str = "config/country_mapping.json") -> None:
+        self._output_dir = Path(output_dir)
+        self._by_country_dir = self._output_dir / "by_country"
+        self._by_protocol_dir = self._output_dir / "by_protocol"
+        self._by_anonymity_dir = self._output_dir / "by_anonymity"
+        self._country_mapping_path = Path(country_mapping_path)
 
     def export(self, proxies: list[Proxy], stats=None, health=None) -> None:
-        """Alias for build to ensure cross-compatibility with engine."""
+        """Compatibility alias."""
         self.build(proxies)
 
     def build(self, proxies: list[Proxy]) -> None:
-        """Group proxies by country and export them into structured folders and files."""
+        """Build all segmented outputs from enriched proxies."""
+        self._prepare_directories()
+
+        # Normalize all proxies by country
         country_groups: dict[str, list[Proxy]] = {}
-        for proxy in proxies:
-            cc = (proxy.country_code or "UNKNOWN").upper().strip()
-            if cc:
-                country_groups.setdefault(cc, []).append(proxy)
+        for p in proxies:
+            cc = self._normalize_country_code(p.country_code)
+            country_groups.setdefault(cc, []).append(p)
 
-        for country_code, country_proxies in country_groups.items():
-            folder_name = f"{country_code}_proxies"
-            country_folder = os.path.join(self._output_dir, "by_country", folder_name)
-            os.makedirs(country_folder, exist_ok=True)
+        # Global protocol files
+        self._write_global_protocol_files(proxies)
 
-            # 1. Combined Master File for this country
-            main_filename = f"{country_code}_all.txt"
-            main_file_path = os.path.join(country_folder, main_filename)
-            atomic_write_text(main_file_path, "\n".join([p.line() for p in country_proxies]) + "\n")
+        # Global anonymity files
+        self._write_global_anonymity_files(proxies)
 
-            # 2. Protocol Files
-            protocol_groups: dict[str, list[Proxy]] = {}
-            for proxy in country_proxies:
-                proto = proxy.protocol.value.lower() if hasattr(proxy.protocol, 'value') else str(proxy.protocol).lower()
-                protocol_groups.setdefault(proto, []).append(proxy)
+        # Global keep-alive file
+        keep_alive_lines = [p.line() for p in proxies if p.keep_alive]
+        if keep_alive_lines:
+            atomic_write_text(self._output_dir / "keep_alive_proxies.txt", "\n".join(keep_alive_lines) + "\n")
+        else:
+            self._safe_unlink(self._output_dir / "keep_alive_proxies.txt")
 
-            for proto_name, proto_proxies in protocol_groups.items():
-                proto_file_path = os.path.join(country_folder, f"{proto_name}.txt")
-                atomic_write_text(proto_file_path, "\n".join([p.line() for p in proto_proxies]) + "\n")
+        # Country folders and files
+        for country_code, items in country_groups.items():
+            self._write_country_folder(country_code, items)
 
-            # 3. Keep-Alive File (Only exported if keep-alive proxies exist)
-            keep_alive_proxies = [p for p in country_proxies if p.keep_alive]
-            if keep_alive_proxies:
-                ka_file_path = os.path.join(country_folder, "keep_alive.txt")
-                atomic_write_text(ka_file_path, "\n".join([p.line() for p in keep_alive_proxies]) + "\n")
+        logger.info("Segmented export done. countries=%d proxies=%d", len(country_groups), len(proxies))
 
-            # 4. Software Files (e.g., software_squid.txt, software_mikrotik.txt)
-            software_groups: dict[str, list[Proxy]] = {}
-            for proxy in country_proxies:
-                if proxy.software:
-                    software_groups.setdefault(proxy.software.lower(), []).append(proxy)
-                    
-            for sw_name, sw_proxies in software_groups.items():
-                sw_file_path = os.path.join(country_folder, f"software_{sw_name}.txt")
-                atomic_write_text(sw_file_path, "\n".join([p.line() for p in sw_proxies]) + "\n")
+    def _prepare_directories(self) -> None:
+        """Clean old segmented output directories and recreate stable structure."""
+        # Remove stale directories/files from previous formats
+        if self._by_country_dir.exists():
+            shutil.rmtree(self._by_country_dir)
+        if self._by_protocol_dir.exists():
+            shutil.rmtree(self._by_protocol_dir)
+        if self._by_anonymity_dir.exists():
+            shutil.rmtree(self._by_anonymity_dir)
 
-        # Create a GLOBAL Keep-Alive master list inside the root outputs folder
-        global_keep_alive = [p.line() for p in proxies if p.keep_alive]
-        if global_keep_alive:
-            ka_global_path = os.path.join(self._output_dir, "keep_alive_proxies.txt")
-            atomic_write_text(ka_global_path, "\n".join(global_keep_alive) + "\n")
+        self._by_country_dir.mkdir(parents=True, exist_ok=True)
+        self._by_protocol_dir.mkdir(parents=True, exist_ok=True)
+        self._by_anonymity_dir.mkdir(parents=True, exist_ok=True)
 
-        logger.info("Successfully exported structured country folders for %d countries.", len(country_groups))
+        # Optional: remove old flat files directly under by_country (legacy)
+        for legacy in self._by_country_dir.glob("*.txt"):
+            self._safe_unlink(legacy)
 
+    def _write_country_folder(self, country_code: str, proxies: list[Proxy]) -> None:
+        """Write one country folder with all expected files."""
+        folder = self._by_country_dir / f"{country_code}_proxies"
+        folder.mkdir(parents=True, exist_ok=True)
 
-def build_segmented_exporter(settings) -> SegmentedBuilder:
-    """Factory function to build SegmentedBuilder from settings."""
-    return SegmentedBuilder(output_dir=getattr(settings, "output_dir", "outputs"))
+        # Main file for the country
+        all_path = folder / f"{country_code}_all.txt"
+        atomic_write_text(all_path, "\n".join([p.line() for p in proxies]) + "\n")
+
+        # Protocol files (http, socks4, socks5, etc.)
+        protocol_groups: dict[str, list[Proxy]] = {}
+        for p in proxies:
+            proto = self._normalize_protocol(p)
+            protocol_groups.setdefault(proto, []).append(p)
+
+        for proto, items in protocol_groups.items():
+            atomic_write_text(folder / f"{proto}.txt", "\n".join([x.line() for x in items]) + "\n")
+
+        # Keep-alive file
+        keep_alive = [p.line() for p in proxies if p.keep_alive]
+        if keep_alive:
+            atomic_write_text(folder / "keep_alive.txt", "\n".join(keep_alive) + "\n")
+        else:
+            self._safe_unlink(folder / "keep_alive.txt")
+
+        # Software files
+        software_groups: dict[str, list[Proxy]] = {}
+        for p in proxies:
+            if p.software:
+                key = self._sanitize_filename(p.software.lower())
+                if key:
+                    software_groups.setdefault(key, []).append(p)
+
+        for software_name, items in software_groups.items():
+            atomic_write_text(
+                folder / f"software_{software_name}.txt",
+                "\n".join([x.line() for x in items]) + "\n",
+            )
+
+    def _write_global_protocol_files(self, proxies: list[Proxy]) -> None:
+        grouped: dict[str, list[Proxy]] = {}
+        for p in proxies:
+            proto = self._normalize_protocol(p)
+            grouped.setdefault(proto, []).append(p)
+
+        for proto, items in grouped.items():
+            atomic_write_text(self._by_protocol_dir / f"{proto}.txt", "\n".join([x.line() for x in items]) + "\n")
+
+    def _write_global_anonymity_files(self, proxies: list[Proxy]) -> None:
+        grouped: dict[str, list[Proxy]] = {}
+        for p in proxies:
+            an = self._normalize_anonymity(p)
+            grouped.setdefault(an, []).append(p)
+
+        for an, items in grouped.items():
+            atomic_write_text(self._by_anonymity_dir / f"{an}.txt", "\n".join([x.line() for x in items]) + "\n")
+
+    @staticmethod
+    def _normalize_country_code(country_code: str | None) -> str:
+        if not country_code:
+            return "UNKNOWN"
+        cc = country_code.strip().upper()
+        return cc if cc else "UNKNOWN"
+
+    @staticmethod
+    def _normalize_protocol(proxy: Proxy) -> str:
+        val = proxy.protocol.value if hasattr(proxy.protocol, "value") else str(proxy.protocol)
+        v = val.strip().lower()
+        return v if v else "unknown"
+
+    @staticmethod
+    def _normalize_anonymity(proxy: Proxy) -> str:
+        val = proxy.anonymity.value if hasattr(proxy.anonymity, "value") else str(proxy.anonymity)
+        v = val.strip().lower().replace(" ", "_")
+        return v if v else "unknown"
+
+    @staticmethod
+    def _sanitize_filename(name: str) -> str:
+        # keep lowercase letters, numbers, underscore, hyphen
+        cleaned = re.sub(r"[^a-z0-9_-]+", "_", name).strip("_")
+        return cleaned[:80]
+
+    @staticmethod
+    def _safe_unlink(path: Path) -> None:
+        try:
+            if path.exists():
+                path.unlink()
+        except OSError:
+            logger.warning("Failed to remove file: %s", path)
