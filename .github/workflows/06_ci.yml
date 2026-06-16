@@ -13,6 +13,7 @@ jobs:
   lint-and-test:
     name: Ruff, Mypy & Pytest
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,19 +21,20 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: pip
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
-          pip install ruff mypy pytest pytest-asyncio
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install -e ".[dev]"
 
       - name: Ruff lint
-        run: ruff check src tests
+        run: python -m ruff check src tests
 
       - name: Mypy type check
-        run: mypy src || true
+        run: python -m mypy src
 
       - name: Run tests
-        run: pytest -q
+        run: python -m pytest -q
