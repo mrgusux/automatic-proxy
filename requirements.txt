@@ -6,6 +6,7 @@ geoip2
 rich
 tenacity
 uvloop; platform_system != "Windows"
+redis
 pytest
 pytest-asyncio
 mypy
