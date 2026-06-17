@@ -1,5 +1,3 @@
-### File: src/models/proxy.py
-
 """Strict Pydantic schema for a proxy record."""
 
 from __future__ import annotations
