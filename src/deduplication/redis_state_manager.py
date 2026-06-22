@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -12,9 +13,9 @@ class RedisStateManager:
 
     def __init__(self, url: str = "redis://localhost:6379/0", key: str = "seen_proxies") -> None:
         self._key = key
-        self._client: object = None
+        self._client: Any = None
         try:
-            import redis
+            import redis  # type: ignore[import-untyped]
 
             self._client = redis.Redis.from_url(url, socket_connect_timeout=2)
             self._client.ping()
