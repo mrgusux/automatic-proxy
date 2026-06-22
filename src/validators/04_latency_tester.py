@@ -13,7 +13,7 @@ from src.models.proxy import Proxy
 try:
     from aiohttp_socks import ProxyConnector
 except ImportError:
-    ProxyConnector = None
+    ProxyConnector = None  # type: ignore[assignment,misc]
 
 
 def _build_session(proxy: Proxy, timeout: float) -> tuple[aiohttp.ClientSession, str | None]:
