@@ -31,6 +31,9 @@ geoip_asn_db: data/geoip/GeoLite2-ASN.mmdb
 geo_cache_file: data/cache/geolocation_cache.json
 country_mapping_file: config/country_mapping.json
 
+# Validation rules.
+validation_rules_file: config/validation_rules.yaml
+
 # Enrichment toggles.
 enable_blacklist_check: true
 enable_asn_resolution: true
