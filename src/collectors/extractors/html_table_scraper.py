@@ -26,7 +26,7 @@ class _TableParser(HTMLParser):
         self._in_cell = False
         self._in_header = False
 
-    def handle_starttag(self, tag: str, attrs: list) -> None:
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag == "tr":
             self._current = []
         elif tag == "th":
@@ -57,11 +57,7 @@ class _TableParser(HTMLParser):
 
 
 class HtmlTableScraper(BaseScraper):
-    """Parse proxy tables, mapping extra columns (country, anonymity, protocol).
-
-    Falls back to a positional scan (first IP-like + port-like cell) when the
-    table has no recognisable header row.
-    """
+    """Parse proxy tables, mapping extra columns (country, anonymity, protocol)."""
 
     def parse(self, content: str, source: SourceMetadata) -> list[Proxy]:
         parser = _TableParser()
@@ -76,7 +72,6 @@ class HtmlTableScraper(BaseScraper):
 
     @staticmethod
     def _map_columns(headers: list[str]) -> dict[str, int]:
-        """Best-effort map of semantic field -> column index from header labels."""
         mapping: dict[str, int] = {}
         for idx, label in enumerate(headers):
             if "ip" in label and "ip" not in mapping:
@@ -98,7 +93,6 @@ class HtmlTableScraper(BaseScraper):
             ip = self._cell(row, col["ip"])
             port = self._cell(row, col["port"])
         else:
-            # Positional fallback.
             ip = next((c for c in row if _IP_RE.match(c)), None)
             port = next((c for c in row if _PORT_RE.match(c)), None)
         if not ip or not port or not _IP_RE.match(ip) or not _PORT_RE.match(port):
