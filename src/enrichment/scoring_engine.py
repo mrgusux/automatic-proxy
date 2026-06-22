@@ -1,13 +1,9 @@
-"""Quality scoring engine (0-100) + enrichment orchestration.
-
-Scoring weights and latency buckets are loaded from
-``config/validation_rules.yaml`` so the scoring policy can be tuned without
-code changes.
-"""
+"""Quality scoring engine (0-100) + enrichment orchestration."""
 
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 from src.core.constants import AnonymityLevel, Protocol
 from src.enrichment.asn_resolver import AsnResolver
@@ -18,16 +14,14 @@ from src.utils.config_loader import load_scoring_rules
 
 logger = logging.getLogger(__name__)
 
-# Relative weighting of each anonymity level (scaled by the configured weight).
-_ANONYMITY_FACTOR = {
+_ANONYMITY_FACTOR: dict[AnonymityLevel, float] = {
     AnonymityLevel.ELITE: 1.0,
     AnonymityLevel.ANONYMOUS: 0.63,
     AnonymityLevel.TRANSPARENT: 0.23,
     AnonymityLevel.UNKNOWN: 0.0,
 }
 
-# Relative weighting of each protocol (scaled by the configured weight).
-_PROTOCOL_FACTOR = {
+_PROTOCOL_FACTOR: dict[Protocol, float] = {
     Protocol.SOCKS5: 1.0,
     Protocol.HTTPS: 0.87,
     Protocol.SOCKS4: 0.6,
@@ -43,7 +37,7 @@ class ScoringEngine:
         asn_db_path: str,
         enable_asn: bool,
         enable_blacklist: bool,
-        rules: dict | None = None,
+        rules: dict[str, Any] | None = None,
         concurrency: int = 200,
     ) -> None:
         self._asn = AsnResolver(asn_db_path) if enable_asn else None
@@ -52,7 +46,7 @@ class ScoringEngine:
         self._rules = rules or load_scoring_rules()
 
     def _latency_points(self, latency_ms: float | None) -> float:
-        weight = self._rules["weight_latency"]
+        weight: float = self._rules["weight_latency"]
         if latency_ms is None:
             return 0.0
         if latency_ms < self._rules["excellent_below"]:
@@ -71,7 +65,8 @@ class ScoringEngine:
         )
         if not proxy.is_blacklisted:
             total += self._rules["weight_clean_blacklist"]
-        return max(0, min(100, round(total)))
+        result: int = max(0, min(100, round(total)))
+        return result
 
     async def _enrich_one(self, proxy: Proxy) -> Proxy:
         if self._asn is not None:
@@ -90,7 +85,7 @@ class ScoringEngine:
         return enriched
 
 
-def build_enricher(settings) -> ScoringEngine:
+def build_enricher(settings: object) -> ScoringEngine:
     return ScoringEngine(
         asn_db_path=settings.geoip_asn_db,
         enable_asn=settings.enable_asn_resolution,
