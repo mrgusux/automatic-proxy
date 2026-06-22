@@ -22,22 +22,16 @@ class PipelineResult:
 
 
 class PipelineManager:
-    """Coordinates the end-to-end collection workflow.
-
-    The concrete collector / validator / enricher / exporter components are
-    injected so the manager stays testable. Each component exposes an async
-    ``run``-style method; see the respective modules (generated in later
-    batches) for the protocols they satisfy.
-    """
+    """Coordinates the end-to-end collection workflow."""
 
     def __init__(
         self,
         sources: list[SourceMetadata],
-        collector,
-        deduplicator,
-        verifier,
-        enricher,
-        exporter,
+        collector: object,
+        deduplicator: object,
+        verifier: object,
+        enricher: object,
+        exporter: object,
         max_alive_output: int = 50_000,
     ) -> None:
         self._sources = sources
@@ -52,7 +46,6 @@ class PipelineManager:
         stats = ValidationStats(sources_total=len(self._sources))
         result = PipelineResult(stats=stats)
 
-        # 1. COLLECT --------------------------------------------------------
         logger.info("Stage 1/5: collecting from %d sources", len(self._sources))
         raw_proxies, health = await self._collector.collect(self._sources)
         result.source_health = health
@@ -60,25 +53,21 @@ class PipelineManager:
         stats.sources_ok = sum(1 for h in health if h.success)
         stats.sources_failed = sum(1 for h in health if not h.success)
 
-        # 2. DEDUPLICATE ----------------------------------------------------
         logger.info("Stage 2/5: deduplicating %d raw proxies", len(raw_proxies))
         unique = self._deduplicator.deduplicate(raw_proxies)
         stats.after_dedup = len(unique)
 
-        # 3. VERIFY ---------------------------------------------------------
         logger.info("Stage 3/5: verifying %d unique proxies", len(unique))
         verified = await self._verifier.verify_all(unique)
         alive = [p for p in verified if p.is_alive]
         stats.alive = len(alive)
         stats.dead = len(verified) - len(alive)
 
-        # 4. ENRICH ---------------------------------------------------------
         logger.info("Stage 4/5: enriching %d alive proxies", len(alive))
         enriched = await self._enricher.enrich_all(alive)
         enriched.sort(key=lambda p: p.quality_score, reverse=True)
         enriched = enriched[: self._max_alive_output]
 
-        # 5. EXPORT ---------------------------------------------------------
         logger.info("Stage 5/5: exporting %d proxies", len(enriched))
         self._compute_distributions(enriched, stats)
         if enriched:
