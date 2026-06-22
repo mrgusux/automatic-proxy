@@ -10,7 +10,7 @@ from src.enrichment.asn_resolver import AsnResolver
 from src.enrichment.spam_blacklist_check import SpamBlacklistChecker
 from src.models.proxy import Proxy
 from src.utils.async_semaphore_pool import AsyncSemaphorePool
-from src.utils.config_loader import load_scoring_rules
+from src.utils.config_loader import Settings, load_scoring_rules
 
 logger = logging.getLogger(__name__)
 
@@ -46,25 +46,27 @@ class ScoringEngine:
         self._rules = rules or load_scoring_rules()
 
     def _latency_points(self, latency_ms: float | None) -> float:
-        weight: float = self._rules["weight_latency"]
+        weight: float = float(self._rules["weight_latency"])
         if latency_ms is None:
             return 0.0
-        if latency_ms < self._rules["excellent_below"]:
+        if latency_ms < float(self._rules["excellent_below"]):
             return weight
-        if latency_ms < self._rules["good_below"]:
+        if latency_ms < float(self._rules["good_below"]):
             return weight * 0.75
-        if latency_ms < self._rules["acceptable_below"]:
+        if latency_ms < float(self._rules["acceptable_below"]):
             return weight * 0.45
         return weight * 0.2
 
     def score(self, proxy: Proxy) -> int:
         total = (
             self._latency_points(proxy.latency_ms)
-            + self._rules["weight_anonymity"] * _ANONYMITY_FACTOR.get(proxy.anonymity, 0.0)
-            + self._rules["weight_protocol"] * _PROTOCOL_FACTOR.get(proxy.protocol, 0.0)
+            + float(self._rules["weight_anonymity"])
+            * _ANONYMITY_FACTOR.get(proxy.anonymity, 0.0)
+            + float(self._rules["weight_protocol"])
+            * _PROTOCOL_FACTOR.get(proxy.protocol, 0.0)
         )
         if not proxy.is_blacklisted:
-            total += self._rules["weight_clean_blacklist"]
+            total += float(self._rules["weight_clean_blacklist"])
         result: int = max(0, min(100, round(total)))
         return result
 
@@ -85,7 +87,7 @@ class ScoringEngine:
         return enriched
 
 
-def build_enricher(settings: object) -> ScoringEngine:
+def build_enricher(settings: Settings) -> ScoringEngine:
     return ScoringEngine(
         asn_db_path=settings.geoip_asn_db,
         enable_asn=settings.enable_asn_resolution,
