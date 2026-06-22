@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Download GeoIP databases
+        run: |
+          mkdir -p data/geoip
+          curl -sL "https://git.io/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || echo "GeoIP country DB download failed, running without geo"
+          curl -sL "https://git.io/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || echo "GeoIP ASN DB download failed, running without ASN"
+
       - name: Run collector pipeline
         run: python -m src.main run --log-level INFO
 
