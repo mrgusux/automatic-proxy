@@ -1,10 +1,4 @@
-"""Verification engine: orchestrates the 5 validation dimensions.
-
-The individual dimension modules are named with numeric prefixes
-(``01_liveliness_tcp.py`` ...) per the project layout, which are not valid
-Python identifiers for a normal ``import``. They are therefore loaded
-dynamically with importlib.
-"""
+"""Verification engine: orchestrates the 5 validation dimensions."""
 
 from __future__ import annotations
 
@@ -23,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 _VALIDATORS_DIR = Path(__file__).parent
 
-# Ordered ranking so we can compare against a configured minimum level.
-_ANONYMITY_RANK = {
+_ANONYMITY_RANK: dict[AnonymityLevel, int] = {
     AnonymityLevel.UNKNOWN: 0,
     AnonymityLevel.TRANSPARENT: 1,
     AnonymityLevel.ANONYMOUS: 2,
@@ -35,7 +28,7 @@ _ANONYMITY_RANK = {
 def _load(module_filename: str) -> ModuleType:
     path = _VALIDATORS_DIR / module_filename
     spec = importlib.util.spec_from_file_location(path.stem, path)
-    if spec is None or spec.loader is None:  # pragma: no cover
+    if spec is None or spec.loader is None:
         raise ImportError(f"Cannot load validator module {module_filename}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -70,41 +63,33 @@ class VerificationEngine:
         self._protocol = _load("02_protocol_detector.py")
         self._anonymity = _load("03_anonymity_check.py")
         self._latency = _load("04_latency_tester.py")
-        # GeoLocator lives in 05_geo_locator.py; the numeric module name is not a
-        # valid Python import identifier, so load it dynamically like the others.
         geo_module = _load("05_geo_locator.py")
         self._geo = geo_module.GeoLocator(geoip_country_db)
 
     async def _verify_one(self, proxy: Proxy) -> Proxy:
-        # 1. TCP liveliness gate.
         alive = await self._liveliness.check_liveliness(proxy, self._tcp_timeout)
         if not alive:
             proxy.is_alive = False
             return proxy
 
-        # 2. Protocol detection.
         proxy.protocol = await self._protocol.detect_protocol(proxy, self._tcp_timeout)
 
-        # 4. Latency (also confirms a usable HTTP path).
         latency = await self._latency.measure_latency(proxy, self._validate_timeout)
         if latency is None or latency > self._max_latency_ms:
             proxy.is_alive = False
             return proxy
         proxy.latency_ms = latency
 
-        # 3. Anonymity scoring.
         proxy.anonymity = await self._anonymity.check_anonymity(
             proxy, self._real_ip, self._validate_timeout
         )
         if proxy.anonymity == AnonymityLevel.UNKNOWN:
             proxy.anonymity = AnonymityLevel.TRANSPARENT
 
-        # Drop proxies below the configured minimum anonymity level.
         if _ANONYMITY_RANK.get(proxy.anonymity, 0) < self._min_anonymity_rank:
             proxy.is_alive = False
             return proxy
 
-        # 5. Geolocation (cache-backed; preserves any value a scraper supplied).
         code, name = self._resolve_geo(proxy)
         if code:
             proxy.country_code = code
@@ -133,7 +118,7 @@ class VerificationEngine:
         return verified
 
 
-def build_verifier(settings) -> VerificationEngine:
+def build_verifier(settings: object) -> VerificationEngine:
     return VerificationEngine(
         concurrency=settings.validate_concurrency,
         tcp_timeout=settings.tcp_timeout,
