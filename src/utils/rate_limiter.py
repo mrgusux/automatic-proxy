@@ -5,9 +5,10 @@ from __future__ import annotations
 import asyncio
 import time
 
+
 class TokenBucket:
     def __init__(self, rate: float, capacity: int) -> None:
-        self._rate = float(rate)  # FIXED: Forced float casting
+        self._rate = float(rate)
         self._capacity = float(capacity)
         self._tokens = float(capacity)
         self._updated = time.monotonic()
@@ -31,12 +32,13 @@ class TokenBucket:
                 wait_for = deficit / self._rate
             await asyncio.sleep(wait_for)
 
-    async def __aenter__(self) -> "TokenBucket":
+    async def __aenter__(self) -> TokenBucket:
         await self.acquire()
         return self
 
     async def __aexit__(self, *exc: object) -> None:
         return None
+
 
 class CircuitBreaker:
     def __init__(self, failure_threshold: int = 3, cooldown: float = 1800.0) -> None:
