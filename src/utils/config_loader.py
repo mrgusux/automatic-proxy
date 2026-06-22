@@ -95,7 +95,8 @@ def _read_yaml_any(path: str | Path) -> dict[str, Any]:
 def load_minimum_anonymity(validation_rules_file: str | Path) -> str:
     raw = _read_yaml_any(validation_rules_file)
     try:
-        return raw["anonymity"]["minimum_level"]
+        result: str = raw["anonymity"]["minimum_level"]
+        return result
     except (KeyError, TypeError):
         return "transparent"
 
