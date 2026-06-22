@@ -14,11 +14,6 @@ class SpamBlacklistChecker:
         self._enabled = enabled
 
     async def is_blacklisted(self, proxy: Proxy) -> bool:
-        """Return blacklist status for a proxy.
-
-        Current implementation is a safe placeholder (non-blocking) and can be
-        extended with real DNSBL providers later.
-        """
         if not self._enabled:
             return False
         _ = proxy
