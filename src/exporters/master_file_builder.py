@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import Any
 
 from src.exporters.atomic_writer import atomic_write_text
 from src.exporters.json_manifest_builder import JsonManifestBuilder
@@ -40,5 +41,5 @@ class MasterFileBuilder:
         self._manifest.build(stats, source_health)
 
 
-def build_exporter(settings) -> MasterFileBuilder:
+def build_exporter(settings: Any) -> MasterFileBuilder:
     return MasterFileBuilder(output_dir=settings.output_dir)
