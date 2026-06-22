@@ -15,7 +15,7 @@ class RedisStateManager:
         self._key = key
         self._client: Any = None
         try:
-            import redis  # type: ignore[import-untyped]
+            import redis
 
             self._client = redis.Redis.from_url(url, socket_connect_timeout=2)
             self._client.ping()
