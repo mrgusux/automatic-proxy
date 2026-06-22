@@ -8,7 +8,7 @@ import logging
 import sys
 
 try:
-    import uvloop  # type: ignore[import-untyped]
+    import uvloop
 except ImportError:
     uvloop = None  # type: ignore[assignment]
 
