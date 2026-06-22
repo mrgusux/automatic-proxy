@@ -11,7 +11,7 @@ from src.core.constants import AnonymityLevel
 from src.enrichment.geo_cache import GeoCache
 from src.models.proxy import Proxy
 from src.utils.async_semaphore_pool import AsyncSemaphorePool
-from src.utils.config_loader import load_minimum_anonymity
+from src.utils.config_loader import Settings, load_minimum_anonymity
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +118,7 @@ class VerificationEngine:
         return verified
 
 
-def build_verifier(settings: object) -> VerificationEngine:
+def build_verifier(settings: Settings) -> VerificationEngine:
     return VerificationEngine(
         concurrency=settings.validate_concurrency,
         tcp_timeout=settings.tcp_timeout,
