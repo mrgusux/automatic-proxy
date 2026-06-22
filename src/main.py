@@ -6,12 +6,11 @@ import argparse
 import asyncio
 import logging
 import sys
-from types import ModuleType
 
 try:
     import uvloop  # type: ignore[import-untyped]
 except ImportError:
-    uvloop = None
+    uvloop = None  # type: ignore[assignment]
 
 logger = logging.getLogger("proxy_collector")
 
