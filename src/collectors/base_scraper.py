@@ -6,11 +6,11 @@ import abc
 import logging
 import time
 
+from src.collectors.rotators.user_agent_rotator import UserAgentRotator
 from src.core.constants import MAX_PORT, MIN_PORT, Protocol
 from src.models.proxy import Proxy
 from src.models.source_metadata import SourceHealth, SourceMetadata
 from src.utils.http_client import HttpClient
-from src.collectors.rotators.user_agent_rotator import UserAgentRotator
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,6 @@ class BaseScraper(abc.ABC):
     async def scrape(
         self, source: SourceMetadata, client: HttpClient
     ) -> tuple[list[Proxy], SourceHealth]:
-        """Fetch and parse a single source, capturing health metrics."""
         health = SourceHealth(name=source.name, url=source.url)
         start = time.monotonic()
         try:
@@ -36,7 +35,7 @@ class BaseScraper(abc.ABC):
             proxies = self.parse(content, source)
             health.success = True
             health.proxies_found = len(proxies)
-        except Exception as exc:  # noqa: BLE001 - record, never crash the run
+        except Exception as exc:
             logger.warning("Source %s failed: %s", source.name, exc)
             health.success = False
             health.error = str(exc)
@@ -49,7 +48,6 @@ class BaseScraper(abc.ABC):
     def make_proxy(
         ip: str, port: int | str, source: SourceMetadata
     ) -> Proxy | None:
-        """Safely construct a Proxy, returning None on invalid data."""
         try:
             port_int = int(str(port).strip())
         except (TypeError, ValueError):
@@ -69,5 +67,5 @@ class BaseScraper(abc.ABC):
                 protocol=protocol,
                 source=source.name,
             )
-        except Exception:  # noqa: BLE001 - invalid IP etc.
+        except Exception:
             return None
