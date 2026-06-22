@@ -1,27 +1,29 @@
 {
-  "generated_at": "2026-06-16T12:11:51.625453+00:00",
-  "started_at": "2026-06-16T11:58:14.463631+00:00",
+  "generated_at": "2026-06-22T20:33:52.725404+00:00",
+  "started_at": "2026-06-22T20:20:12.710688+00:00",
   "summary": {
     "sources_total": 63,
     "sources_ok": 59,
     "sources_failed": 4,
-    "raw_collected": 379475,
-    "after_dedup": 119583,
-    "alive": 249,
-    "dead": 119334,
-    "average_latency_ms": 3936.29
+    "raw_collected": 369177,
+    "after_dedup": 112923,
+    "alive": 1014,
+    "dead": 111909,
+    "average_latency_ms": 2935.32
   },
   "distribution": {
     "by_protocol": {
-      "socks5": 134,
-      "http": 104,
-      "socks4": 11
+      "socks5": 604,
+      "http": 330,
+      "socks4": 80
     },
     "by_anonymity": {
-      "elite": 105,
-      "anonymous": 5,
-      "transparent": 139
+      "elite": 646,
+      "anonymous": 8,
+      "transparent": 360
     },
-    "by_country": {}
+    "by_country": {
+      "US": 1
+    }
   }
 }
