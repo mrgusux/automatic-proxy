@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 class SpamBlacklistChecker:
     """Checks whether a proxy is present in known DNSBL/blacklist providers."""
 
-    def __init__(self) -> None:
-        self._enabled = True
+    def __init__(self, enabled: bool = True) -> None:
+        self._enabled = enabled
 
     async def is_blacklisted(self, proxy: Proxy) -> bool:
         """Return blacklist status for a proxy.
