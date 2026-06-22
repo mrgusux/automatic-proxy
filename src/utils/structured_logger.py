@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 from datetime import datetime, timezone
+from typing import Any
 
 try:
     from rich.logging import RichHandler  # type: ignore[import-untyped]
@@ -28,11 +29,6 @@ class JsonFormatter(logging.Formatter):
 
 
 def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
-    """Configure the root logger.
-
-    Uses Rich for colorful console output locally, or compact JSON when
-    ``json_output`` is set (recommended for GitHub Actions).
-    """
     root = logging.getLogger()
     root.handlers.clear()
     root.setLevel(getattr(logging, level.upper(), logging.INFO))
@@ -42,6 +38,6 @@ def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
         handler = logging.StreamHandler()
         handler.setFormatter(JsonFormatter())
     else:
-        handler = RichHandler(rich_tracebacks=True, show_path=False)
+        handler = RichHandler(rich_tracebacks=True, show_path=False)  # type: ignore[misc]
         handler.setFormatter(logging.Formatter("%(message)s"))
     root.addHandler(handler)
