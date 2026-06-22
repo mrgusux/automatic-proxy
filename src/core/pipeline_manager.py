@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
+from typing import Any
 
 from src.models.proxy import Proxy
 from src.models.source_metadata import SourceHealth, SourceMetadata
@@ -27,11 +28,11 @@ class PipelineManager:
     def __init__(
         self,
         sources: list[SourceMetadata],
-        collector: object,
-        deduplicator: object,
-        verifier: object,
-        enricher: object,
-        exporter: object,
+        collector: Any,
+        deduplicator: Any,
+        verifier: Any,
+        enricher: Any,
+        exporter: Any,
         max_alive_output: int = 50_000,
     ) -> None:
         self._sources = sources
