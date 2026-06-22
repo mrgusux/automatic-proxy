@@ -6,6 +6,7 @@ import logging
 import re
 import shutil
 from pathlib import Path
+from typing import Any
 
 from src.exporters.atomic_writer import atomic_write_text
 from src.models.proxy import Proxy
@@ -23,42 +24,33 @@ class SegmentedBuilder:
         self._by_anonymity_dir = self._output_dir / "by_anonymity"
         self._country_mapping_path = Path(country_mapping_path)
 
-    def export(self, proxies: list[Proxy], stats=None, health=None) -> None:
+    def export(self, proxies: list[Proxy], stats: Any = None, health: Any = None) -> None:
         """Compatibility alias."""
         self.build(proxies)
 
     def build(self, proxies: list[Proxy]) -> None:
-        """Build all segmented outputs from enriched proxies."""
         self._prepare_directories()
 
-        # Normalize all proxies by country
         country_groups: dict[str, list[Proxy]] = {}
         for p in proxies:
             cc = self._normalize_country_code(p.country_code)
             country_groups.setdefault(cc, []).append(p)
 
-        # Global protocol files
         self._write_global_protocol_files(proxies)
-
-        # Global anonymity files
         self._write_global_anonymity_files(proxies)
 
-        # Global keep-alive file
         keep_alive_lines = [p.line() for p in proxies if p.keep_alive]
         if keep_alive_lines:
             atomic_write_text(self._output_dir / "keep_alive_proxies.txt", "\n".join(keep_alive_lines) + "\n")
         else:
             self._safe_unlink(self._output_dir / "keep_alive_proxies.txt")
 
-        # Country folders and files
         for country_code, items in country_groups.items():
             self._write_country_folder(country_code, items)
 
         logger.info("Segmented export done. countries=%d proxies=%d", len(country_groups), len(proxies))
 
     def _prepare_directories(self) -> None:
-        """Clean old segmented output directories and recreate stable structure."""
-        # Remove stale directories/files from previous formats
         if self._by_country_dir.exists():
             shutil.rmtree(self._by_country_dir)
         if self._by_protocol_dir.exists():
@@ -70,20 +62,16 @@ class SegmentedBuilder:
         self._by_protocol_dir.mkdir(parents=True, exist_ok=True)
         self._by_anonymity_dir.mkdir(parents=True, exist_ok=True)
 
-        # Optional: remove old flat files directly under by_country (legacy)
         for legacy in self._by_country_dir.glob("*.txt"):
             self._safe_unlink(legacy)
 
     def _write_country_folder(self, country_code: str, proxies: list[Proxy]) -> None:
-        """Write one country folder with all expected files."""
         folder = self._by_country_dir / f"{country_code}_proxies"
         folder.mkdir(parents=True, exist_ok=True)
 
-        # Main file for the country
         all_path = folder / f"{country_code}_all.txt"
         atomic_write_text(all_path, "\n".join([p.line() for p in proxies]) + "\n")
 
-        # Protocol files (http, socks4, socks5, etc.)
         protocol_groups: dict[str, list[Proxy]] = {}
         for p in proxies:
             proto = self._normalize_protocol(p)
@@ -92,14 +80,12 @@ class SegmentedBuilder:
         for proto, items in protocol_groups.items():
             atomic_write_text(folder / f"{proto}.txt", "\n".join([x.line() for x in items]) + "\n")
 
-        # Keep-alive file
         keep_alive = [p.line() for p in proxies if p.keep_alive]
         if keep_alive:
             atomic_write_text(folder / "keep_alive.txt", "\n".join(keep_alive) + "\n")
         else:
             self._safe_unlink(folder / "keep_alive.txt")
 
-        # Software files
         software_groups: dict[str, list[Proxy]] = {}
         for p in proxies:
             if p.software:
@@ -152,7 +138,6 @@ class SegmentedBuilder:
 
     @staticmethod
     def _sanitize_filename(name: str) -> str:
-        # keep lowercase letters, numbers, underscore, hyphen
         cleaned = re.sub(r"[^a-z0-9_-]+", "_", name).strip("_")
         return cleaned[:80]
 
