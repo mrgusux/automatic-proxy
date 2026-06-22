@@ -7,8 +7,8 @@ import logging
 from datetime import datetime, timezone
 
 try:
-    from rich.logging import RichHandler  # type: ignore
-except ImportError:  # pragma: no cover
+    from rich.logging import RichHandler  # type: ignore[import-untyped]
+except ImportError:
     RichHandler = None
 
 
