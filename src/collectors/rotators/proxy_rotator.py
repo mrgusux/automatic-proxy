@@ -4,20 +4,14 @@ from __future__ import annotations
 
 import itertools
 import threading
-from typing import Optional
 
 from src.models.proxy import Proxy
 
 
 class ProxyRotator:
-    """Provides outbound proxies for scraping, rotating in round-robin order.
+    """Provides outbound proxies for scraping, rotating in round-robin order."""
 
-    Once the collector has discovered live proxies, subsequent requests can be
-    routed through them to distribute load and reduce the chance of the
-    runner's IP being rate-limited. Thread-safe for mixed use.
-    """
-
-    def __init__(self, proxies: Optional[list[Proxy]] = None) -> None:
+    def __init__(self, proxies: list[Proxy] | None = None) -> None:
         self._proxies: list[Proxy] = list(proxies or [])
         self._lock = threading.Lock()
         self._cycle = itertools.cycle(self._proxies) if self._proxies else None
@@ -27,7 +21,7 @@ class ProxyRotator:
             self._proxies = list(proxies)
             self._cycle = itertools.cycle(self._proxies) if self._proxies else None
 
-    def next(self) -> Optional[str]:
+    def next(self) -> str | None:
         """Return the next proxy address, or None if the pool is empty."""
         with self._lock:
             if self._cycle is None:
