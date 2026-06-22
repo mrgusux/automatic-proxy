@@ -6,10 +6,11 @@ import argparse
 import asyncio
 import logging
 import sys
+from types import ModuleType
 
 try:
-    import uvloop  # type: ignore
-except ImportError:  # pragma: no cover - optional on Windows
+    import uvloop  # type: ignore[import-untyped]
+except ImportError:
     uvloop = None
 
 logger = logging.getLogger("proxy_collector")
@@ -38,12 +39,6 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 async def _run_pipeline(config_path: str, sources_path: str) -> int:
-    """Wire up components and run the pipeline.
-
-    Imports are local so that the CLI can start even while later batches of
-    component modules are still being generated. Each dependency is created
-    from the loaded YAML configuration.
-    """
     from src.collectors.factory import build_collector
     from src.core.pipeline_manager import PipelineManager
     from src.deduplication.early_aggregator import build_deduplicator
