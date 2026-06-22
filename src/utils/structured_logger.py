@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import logging
 from datetime import datetime, timezone
-from typing import Any
 
 try:
     from rich.logging import RichHandler
@@ -38,6 +37,6 @@ def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
         handler = logging.StreamHandler()
         handler.setFormatter(JsonFormatter())
     else:
-        handler = RichHandler(rich_tracebacks=True, show_path=False)  # type: ignore[misc]
+        handler = RichHandler(rich_tracebacks=True, show_path=False)
         handler.setFormatter(logging.Formatter("%(message)s"))
     root.addHandler(handler)
