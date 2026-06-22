@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 from src.collectors.base_scraper import BaseScraper
 from src.collectors.extractors.github_raw_scraper import GithubRawScraper
@@ -75,7 +76,6 @@ class Collector:
             async def worker(
                 source: SourceMetadata,
             ) -> tuple[list[Proxy], SourceHealth]:
-                # Skip sources whose circuit is open (repeatedly failing).
                 if self._breaker.is_open(source.name):
                     logger.info("Skipping %s (circuit open)", source.name)
                     health = SourceHealth(
@@ -109,8 +109,7 @@ class Collector:
         return all_proxies, health
 
 
-def build_collector(settings) -> Collector:
-    """Factory used by the CLI to construct a Collector from settings."""
+def build_collector(settings: Any) -> Collector:
     return Collector(
         concurrency=settings.scrape_concurrency,
         timeout=settings.scrape_timeout,
