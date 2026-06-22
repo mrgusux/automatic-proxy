@@ -8,9 +8,9 @@ from datetime import datetime, timezone
 from typing import Any
 
 try:
-    from rich.logging import RichHandler  # type: ignore[import-untyped]
+    from rich.logging import RichHandler
 except ImportError:
-    RichHandler = None
+    RichHandler = None  # type: ignore[assignment,misc]
 
 
 class JsonFormatter(logging.Formatter):
