@@ -12,7 +12,6 @@ from src.enrichment.geo_cache import GeoCache
 from src.models.proxy import Proxy
 from src.utils.async_semaphore_pool import AsyncSemaphorePool
 from src.utils.config_loader import Settings, load_minimum_anonymity
-from src.validators.05_geo_locator import ApiGeoLocator
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +65,7 @@ class VerificationEngine:
         self._latency = _load("04_latency_tester.py")
         geo_module = _load("05_geo_locator.py")
         self._geo = geo_module.GeoLocator(geoip_country_db)
-        self._api_geo = ApiGeoLocator()
+        self._api_geo = geo_module.ApiGeoLocator()
 
     async def _verify_one(self, proxy: Proxy) -> Proxy:
         alive = await self._liveliness.check_liveliness(proxy, self._tcp_timeout)
