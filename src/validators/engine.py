@@ -25,6 +25,8 @@ _ANONYMITY_RANK: dict[AnonymityLevel, int] = {
     AnonymityLevel.ELITE: 3,
 }
 
+_MAX_API_GEO_QUERIES = 5000
+
 
 def _load(module_filename: str) -> ModuleType:
     path = _VALIDATORS_DIR / module_filename
@@ -134,6 +136,12 @@ class VerificationEngine:
         needs_geo = [p for p in proxies if not p.country_code]
         if not needs_geo:
             return
+        if len(needs_geo) > _MAX_API_GEO_QUERIES:
+            logger.warning(
+                "API geo: %d proxies need geo but cap is %d, skipping rest",
+                len(needs_geo), _MAX_API_GEO_QUERIES,
+            )
+            needs_geo = needs_geo[:_MAX_API_GEO_QUERIES]
         results = await self._api_geo.locate_batch(needs_geo)
         for p in needs_geo:
             code, name, city = results.get(p.ip, (None, None, None))
