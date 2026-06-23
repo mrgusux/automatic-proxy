@@ -14,13 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class GeoLocator:
-    """Resolve country code/name from an offline MaxMind database.
-
-    Falls back to ip-api.com (free, no key needed) when .mmdb is unavailable.
-    """
-
-    _API_URL = "http://ip-api.com/json/{ip}?fields=status,countryCode,country"
-    _BATCH_API_URL = "http://ip-api.com/batch"
+    """Resolve country code/name from an offline MaxMind database."""
 
     def __init__(self, country_db_path: str) -> None:
         self._reader: Any = None
@@ -55,7 +49,9 @@ class ApiGeoLocator:
     def __init__(self) -> None:
         self._cache: dict[str, tuple[str | None, str | None]] = {}
 
-    async def locate_batch(self, proxies: list[Proxy]) -> dict[str, tuple[str | None, str | None]]:
+    async def locate_batch(
+        self, proxies: list[Proxy]
+    ) -> dict[str, tuple[str | None, str | None]]:
         to_query: list[Proxy] = []
         for p in proxies:
             if p.ip not in self._cache:
@@ -71,7 +67,11 @@ class ApiGeoLocator:
             payload = [{"query": p.ip} for p in batch]
             try:
                 async with aiohttp.ClientSession() as session:
-                    async with session.post(self._BATCH_URL, json=payload, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                    async with session.post(
+                        self._BATCH_URL,
+                        json=payload,
+                        timeout=aiohttp.ClientTimeout(total=15),
+                    ) as resp:
                         if resp.status == 200:
                             results = await resp.json()
                             for item in results:
