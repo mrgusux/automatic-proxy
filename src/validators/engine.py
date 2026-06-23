@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from types import ModuleType
 
-from src.core.constants import AnonymityLevel
+from src.core.constants import AnonymityLevel, Protocol
 from src.enrichment.geo_cache import GeoCache
 from src.models.proxy import Proxy
 from src.utils.async_semaphore_pool import AsyncSemaphorePool
@@ -113,8 +113,7 @@ class VerificationEngine:
         return proxy
 
     def _pick_judge(self, protocol: Protocol) -> str | None:
-        from src.core.constants import Protocol as P
-        if protocol in (P.HTTPS,):
+        if protocol == Protocol.HTTPS:
             return self._judges.get_ssl()
         return self._judges.get_usual() or self._judges.get_any()
 
