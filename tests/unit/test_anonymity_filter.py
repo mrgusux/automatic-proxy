@@ -31,10 +31,10 @@ def _patch_stubs(engine: VerificationEngine, anonymity: AnonymityLevel) -> None:
     async def _protocol(proxy: Proxy, timeout: float) -> Protocol:
         return Protocol.HTTP
 
-    async def _latency(proxy: Proxy, timeout: float) -> float:
+    async def _latency(proxy: Proxy, timeout: float, judge_url: str | None = None, retries: int = 2) -> float:
         return 100.0
 
-    async def _anonymity(proxy: Proxy, real_ip, timeout: float) -> AnonymityLevel:
+    async def _anonymity(proxy: Proxy, real_ip: str | None, timeout: float, judge_url: str | None = None, retries: int = 2) -> AnonymityLevel:
         return anonymity
 
     engine._liveliness.check_liveliness = _alive  # type: ignore[attr-defined]
