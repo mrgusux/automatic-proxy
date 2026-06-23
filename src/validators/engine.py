@@ -25,8 +25,6 @@ _ANONYMITY_RANK: dict[AnonymityLevel, int] = {
     AnonymityLevel.ELITE: 3,
 }
 
-_MAX_API_GEO_QUERIES = 10000000
-
 
 def _load(module_filename: str) -> ModuleType:
     path = _VALIDATORS_DIR / module_filename
@@ -71,7 +69,6 @@ class VerificationEngine:
         self._latency = _load("04_latency_tester.py")
         geo_module = _load("05_geo_locator.py")
         self._geo = geo_module.GeoLocator(geoip_country_db, geoip_city_db)
-        self._api_geo = geo_module.ApiGeoLocator()
         self._judges = JudgeServers()
 
     async def _verify_one(self, proxy: Proxy) -> Proxy:
@@ -132,27 +129,6 @@ class VerificationEngine:
             self._cache.set(proxy.ip, {"code": code, "name": name, "city": city})
         return code, name, city
 
-    async def _apply_api_geo(self, proxies: list[Proxy]) -> None:
-        needs_geo = [p for p in proxies if not p.country_code]
-        if not needs_geo:
-            return
-        if len(needs_geo) > _MAX_API_GEO_QUERIES:
-            logger.warning(
-                "API geo: %d proxies need geo but cap is %d, skipping rest",
-                len(needs_geo), _MAX_API_GEO_QUERIES,
-            )
-            needs_geo = needs_geo[:_MAX_API_GEO_QUERIES]
-        logger.info("API geolocation: querying %d IPs", len(needs_geo))
-        results = await self._api_geo.locate_batch(needs_geo)
-        for p in needs_geo:
-            code, name, city = results.get(p.ip, (None, None, None))
-            if code:
-                p.country_code = code
-            if name:
-                p.country_name = name
-            if city:
-                p.city = city
-
     async def verify_all(self, proxies: list[Proxy]) -> list[Proxy]:
         logger.info("Verifying %d proxies (concurrency-bounded)", len(proxies))
 
@@ -164,9 +140,6 @@ class VerificationEngine:
         self._geo.close()
         if self._cache is not None:
             self._cache.flush()
-
-        alive = [p for p in verified if p.is_alive]
-        await self._apply_api_geo(alive)
 
         return verified
 
