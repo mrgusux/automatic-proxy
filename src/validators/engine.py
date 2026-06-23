@@ -25,7 +25,7 @@ _ANONYMITY_RANK: dict[AnonymityLevel, int] = {
     AnonymityLevel.ELITE: 3,
 }
 
-_MAX_API_GEO_QUERIES = 5000
+_MAX_API_GEO_QUERIES = 10000000
 
 
 def _load(module_filename: str) -> ModuleType:
