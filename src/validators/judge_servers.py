@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import aiohttp
 
@@ -77,7 +77,7 @@ class JudgeServers:
             validate=judge.get("validate", ""),
         )
         try:
-            start = asyncio.get_event_loop().time()
+            start = asyncio.get_running_loop().time()
             async with aiohttp.ClientSession() as session:
                 async with session.get(
                     judge["url"],
@@ -87,7 +87,7 @@ class JudgeServers:
                     if resp.status == 200:
                         body = await resp.text()
                         if not status.validate or status.validate in body:
-                            elapsed = (asyncio.get_event_loop().time() - start) * 1000
+                            elapsed = (asyncio.get_running_loop().time() - start) * 1000
                             status.alive = True
                             status.latency_ms = round(elapsed, 2)
         except Exception:
