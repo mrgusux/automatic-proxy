@@ -33,9 +33,9 @@ jobs:
       - name: Download GeoIP databases
         run: |
           mkdir -p data/geoip
-          curl -sL --max-time 30 "https://git.io/GeoLite2-City.mmdb" -o data/geoip/GeoLite2-City.mmdb || true
-          curl -sL --max-time 30 "https://git.io/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || true
-          curl -sL --max-time 30 "https://git.io/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || true
+          curl -sL --max-time 30 "https://cdn.jsdelivr.net/gh/P3TERX/GeoLite.mmdb@main/GeoLite2-City.mmdb" -o data/geoip/GeoLite2-City.mmdb || true
+          curl -sL --max-time 30 "https://cdn.jsdelivr.net/gh/P3TERX/GeoLite.mmdb@main/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || true
+          curl -sL --max-time 30 "https://cdn.jsdelivr.net/gh/P3TERX/GeoLite.mmdb@main/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || true
 
       - name: Run collector pipeline
         run: python -m src.main run --log-level INFO
