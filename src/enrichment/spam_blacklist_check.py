@@ -69,11 +69,12 @@ class SpamBlacklistChecker:
     ) -> dict[str, bool]:
         logger.info("DNSBL check: testing %d proxies", len(proxies))
         tasks = [self.is_blacklisted(p) for p in proxies]
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        return {
-            proxies[i].ip: results[i] if isinstance(results[i], bool) else False
-            for i in range(len(proxies))
-        }
+        results: list[bool | BaseException] = await asyncio.gather(*tasks, return_exceptions=True)
+        output: dict[str, bool] = {}
+        for i, proxy in enumerate(proxies):
+            r = results[i]
+            output[proxy.ip] = r is True
+        return output
 
     def get_listed_servers(self) -> list[str]:
         return DNSBL_SERVERS.copy()
