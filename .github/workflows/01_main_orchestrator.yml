@@ -16,7 +16,7 @@ jobs:
   collect:
     name: Collect, validate and export proxies
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,10 +33,9 @@ jobs:
       - name: Download GeoIP databases
         run: |
           mkdir -p data/geoip
-          curl -sL "https://git.io/GeoLite2-City.mmdb" -o data/geoip/GeoLite2-City.mmdb || true
-          curl -sL "https://git.io/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || true
-          curl -sL "https://git.io/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || true
-          ls -la data/geoip/
+          curl -sL --max-time 30 "https://git.io/GeoLite2-City.mmdb" -o data/geoip/GeoLite2-City.mmdb || true
+          curl -sL --max-time 30 "https://git.io/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || true
+          curl -sL --max-time 30 "https://git.io/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || true
 
       - name: Run collector pipeline
         run: python -m src.main run --log-level INFO
