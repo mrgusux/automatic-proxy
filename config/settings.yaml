@@ -27,6 +27,7 @@ output_dir: outputs
 
 # GeoIP / cache paths.
 geoip_country_db: data/geoip/GeoLite2-Country.mmdb
+geoip_city_db: data/geoip/GeoLite2-City.mmdb
 geoip_asn_db: data/geoip/GeoLite2-ASN.mmdb
 geo_cache_file: data/cache/geolocation_cache.json
 country_mapping_file: config/country_mapping.json
