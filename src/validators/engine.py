@@ -142,6 +142,7 @@ class VerificationEngine:
                 len(needs_geo), _MAX_API_GEO_QUERIES,
             )
             needs_geo = needs_geo[:_MAX_API_GEO_QUERIES]
+        logger.info("API geolocation: querying %d IPs", len(needs_geo))
         results = await self._api_geo.locate_batch(needs_geo)
         for p in needs_geo:
             code, name, city = results.get(p.ip, (None, None, None))
@@ -164,7 +165,8 @@ class VerificationEngine:
         if self._cache is not None:
             self._cache.flush()
 
-        await self._apply_api_geo(verified)
+        alive = [p for p in verified if p.is_alive]
+        await self._apply_api_geo(alive)
 
         return verified
 
