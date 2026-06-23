@@ -59,7 +59,7 @@ def _detect_software(body: str, headers: dict[str, str]) -> str | None:
 
 def _detect_keep_alive(headers: dict[str, str]) -> bool:
     connection_header = headers.get("connection", "")
-    return "keep-alive" in headers or "keep-alive" in connection_header
+    return "keep-alive" in connection_header
 
 
 def _detect_anonymity(body: str, real_ip: str | None) -> AnonymityLevel:
@@ -99,7 +99,5 @@ async def check_anonymity(
             if attempt < retries:
                 continue
             return AnonymityLevel.UNKNOWN
-        finally:
-            pass
 
     return AnonymityLevel.UNKNOWN
