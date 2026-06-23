@@ -95,33 +95,35 @@ class ApiGeoLocator:
             batch = to_query[i : i + batch_size]
             payload = [{"query": p.ip} for p in batch]
             try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(
+                async with (
+                    aiohttp.ClientSession() as session,
+                    session.post(
                         self._BATCH_URL,
                         json=payload,
                         timeout=aiohttp.ClientTimeout(total=20),
-                    ) as resp:
-                        if resp.status == 200:
-                            results = await resp.json()
-                            if isinstance(results, list):
-                                for item in results:
-                                    if isinstance(item, dict) and item.get("status") == "success":
-                                        ip_addr = item.get("query", "")
-                                        code = item.get("countryCode")
-                                        name = item.get("country")
-                                        city = item.get("city")
-                                        if ip_addr:
-                                            self._cache[ip_addr] = (code, name, city)
-                                queried_ips = {item.get("query") for item in results if isinstance(item, dict)}
-                                for p in batch:
-                                    if p.ip not in queried_ips:
-                                        self._cache[p.ip] = (None, None, None)
-                            else:
-                                for p in batch:
+                    ) as resp,
+                ):
+                    if resp.status == 200:
+                        results = await resp.json()
+                        if isinstance(results, list):
+                            for item in results:
+                                if isinstance(item, dict) and item.get("status") == "success":
+                                    ip_addr = item.get("query", "")
+                                    code = item.get("countryCode")
+                                    name = item.get("country")
+                                    city = item.get("city")
+                                    if ip_addr:
+                                        self._cache[ip_addr] = (code, name, city)
+                            queried_ips = {item.get("query") for item in results if isinstance(item, dict)}
+                            for p in batch:
+                                if p.ip not in queried_ips:
                                     self._cache[p.ip] = (None, None, None)
                         else:
                             for p in batch:
                                 self._cache[p.ip] = (None, None, None)
+                    else:
+                        for p in batch:
+                            self._cache[p.ip] = (None, None, None)
             except Exception as exc:
                 logger.warning("API geolocation batch failed: %s", exc)
                 for p in batch:
