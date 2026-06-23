@@ -16,7 +16,7 @@ jobs:
   collect:
     name: Collect, validate and export proxies
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +29,14 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Download GeoIP databases
+        run: |
+          mkdir -p data/geoip
+          curl -sL "https://git.io/GeoLite2-City.mmdb" -o data/geoip/GeoLite2-City.mmdb || true
+          curl -sL "https://git.io/GeoLite2-Country.mmdb" -o data/geoip/GeoLite2-Country.mmdb || true
+          curl -sL "https://git.io/GeoLite2-ASN.mmdb" -o data/geoip/GeoLite2-ASN.mmdb || true
+          ls -la data/geoip/
 
       - name: Run collector pipeline
         run: python -m src.main run --log-level INFO
