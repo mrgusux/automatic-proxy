@@ -26,6 +26,7 @@ class Settings(BaseModel):
     max_latency_ms: float = 8000.0
     max_alive_output: int = 50000
     geoip_country_db: str = "data/geoip/GeoLite2-Country.mmdb"
+    geoip_city_db: str | None = "data/geoip/GeoLite2-City.mmdb"
     geoip_asn_db: str = "data/geoip/GeoLite2-ASN.mmdb"
     geo_cache_file: str | None = "data/cache/geolocation_cache.json"
     country_mapping_file: str = "config/country_mapping.json"
