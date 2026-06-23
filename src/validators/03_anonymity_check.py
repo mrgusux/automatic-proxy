@@ -1,4 +1,4 @@
-"""Dimension 3: anonymity classification (elite/anonymous/transparent) + Advanced Fingerprinting."""
+"""Dimension 3: anonymity classification + server/keep-alive detection."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import Any
 
 import aiohttp
 
-from src.core.constants import IP_CHECK_URLS, AnonymityLevel, Protocol
+from src.core.constants import AnonymityLevel, Protocol
 from src.models.proxy import Proxy
 
 try:
@@ -48,28 +48,21 @@ def _build_session(
     return aiohttp.ClientSession(connector=connector, timeout=client_timeout), proxy.address
 
 
-async def check_anonymity(
-    proxy: Proxy, real_ip: str | None, timeout: float = 10.0
-) -> AnonymityLevel:
-    url = IP_CHECK_URLS[0]
-    session, request_proxy = _build_session(proxy, timeout)
-    try:
-        async with session, session.get(url, proxy=request_proxy) as resp:
-            body = await resp.text()
-            headers = {k.lower(): v.lower() for k, v in resp.headers.items()}
-    except Exception:
-        return AnonymityLevel.UNKNOWN
-
-    connection_header = headers.get("connection", "")
-    if "keep-alive" in headers or "keep-alive" in connection_header:
-        proxy.keep_alive = True
-
+def _detect_software(body: str, headers: dict[str, str]) -> str | None:
     body_lower = body.lower()
+    headers_str = str(headers).lower()
     for pattern, software_name in _SOFTWARE_SIGNATURES.items():
-        if re.search(pattern, body_lower) or re.search(pattern, str(headers)):
-            proxy.software = software_name
-            break
+        if re.search(pattern, body_lower) or re.search(pattern, headers_str):
+            return software_name
+    return None
 
+
+def _detect_keep_alive(headers: dict[str, str]) -> bool:
+    connection_header = headers.get("connection", "")
+    return "keep-alive" in headers or "keep-alive" in connection_header
+
+
+def _detect_anonymity(body: str, real_ip: str | None) -> AnonymityLevel:
     body_upper = body.upper()
     if real_ip and real_ip in body:
         return AnonymityLevel.TRANSPARENT
@@ -81,3 +74,32 @@ async def check_anonymity(
     if any(h in seen for h in _PROXY_REVEAL_HEADERS):
         return AnonymityLevel.ANONYMOUS
     return AnonymityLevel.ELITE
+
+
+async def check_anonymity(
+    proxy: Proxy,
+    real_ip: str | None,
+    timeout: float = 10.0,
+    judge_url: str | None = None,
+    retries: int = 2,
+) -> AnonymityLevel:
+    url = judge_url or "http://httpbin.org/ip"
+
+    for attempt in range(retries + 1):
+        session, request_proxy = _build_session(proxy, timeout)
+        try:
+            async with session, session.get(url, proxy=request_proxy) as resp:
+                body = await resp.text()
+                headers = {k.lower(): v.lower() for k, v in resp.headers.items()}
+
+                proxy.keep_alive = _detect_keep_alive(headers)
+                proxy.software = _detect_software(body, headers)
+                return _detect_anonymity(body, real_ip)
+        except Exception:
+            if attempt < retries:
+                continue
+            return AnonymityLevel.UNKNOWN
+        finally:
+            pass
+
+    return AnonymityLevel.UNKNOWN
