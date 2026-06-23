@@ -56,9 +56,8 @@ class SpamBlacklistChecker:
     async def _query_dnsbl(self, dnsbl_server: str, reversed_ip: str) -> bool:
         query = f"{reversed_ip}.{dnsbl_server}"
         try:
-            loop = asyncio.get_event_loop()
             await asyncio.wait_for(
-                loop.getaddrinfo(query, None, family=socket.AF_INET),
+                asyncio.get_running_loop().getaddrinfo(query, None, family=socket.AF_INET),
                 timeout=self._timeout,
             )
             return True
