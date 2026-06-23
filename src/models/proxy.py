@@ -27,6 +27,7 @@ class Proxy(BaseModel):
 
     country_code: str | None = None
     country_name: str | None = None
+    city: str | None = None
     asn: int | None = None
     isp: str | None = None
     is_blacklisted: bool = False
