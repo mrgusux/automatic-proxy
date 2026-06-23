@@ -71,7 +71,11 @@ class HttpClient:
 
                 async with self._session.get(url, headers=safe_headers) as resp:
                     resp.raise_for_status()
-                    return await resp.text()
+                    raw = await resp.read()
+                    try:
+                        return raw.decode("utf-8")
+                    except UnicodeDecodeError:
+                        return raw.decode("latin-1")
             except Exception as exc:
                 last_exc = exc
                 base = self._backoff * (2 ** (attempt - 1))
