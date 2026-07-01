@@ -6,7 +6,7 @@
 
 Scrapes 100+ publicly shared proxy sources, validates them across **5 dimensions**,
 enriches metadata, and exports clean, deduplicated, ready-to-use lists — every 3 hours,
-with zero servers to maintain.
+with zero servers to maintain..
 
 <br/>
 
