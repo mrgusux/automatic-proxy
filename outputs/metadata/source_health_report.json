@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-29T15:00:44.900829+00:00",
+  "generated_at": "2026-08-29T19:14:42.336044+00:00",
   "sources": [
     {
       "name": "proxyscrape_http",
       "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all",
       "success": true,
-      "proxies_found": 403,
-      "elapsed_ms": 514.52,
+      "proxies_found": 877,
+      "elapsed_ms": 676.75,
       "error": null,
       "health_score": 100.0
     },
@@ -14,8 +14,8 @@
       "name": "proxyscrape_socks4",
       "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000",
       "success": true,
-      "proxies_found": 110,
-      "elapsed_ms": 529.33,
+      "proxies_found": 135,
+      "elapsed_ms": 608.14,
       "error": null,
       "health_score": 100.0
     },
@@ -23,8 +23,8 @@
       "name": "proxyscrape_socks5",
       "url": "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks5&timeout=10000",
       "success": true,
-      "proxies_found": 344,
-      "elapsed_ms": 553.61,
+      "proxies_found": 522,
+      "elapsed_ms": 680.41,
       "error": null,
       "health_score": 100.0
     },
@@ -32,8 +32,8 @@
       "name": "proxyscrape_all_v4",
       "url": "https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&proxy_format=ipport&format=text",
       "success": true,
-      "proxies_found": 1094,
-      "elapsed_ms": 521.4,
+      "proxies_found": 1930,
+      "elapsed_ms": 573.47,
       "error": null,
       "health_score": 100.0
     },
@@ -41,8 +41,8 @@
       "name": "thespeedx_http",
       "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
       "success": true,
-      "proxies_found": 2777,
-      "elapsed_ms": 417.64,
+      "proxies_found": 3062,
+      "elapsed_ms": 394.25,
       "error": null,
       "health_score": 100.0
     },
@@ -50,8 +50,8 @@
       "name": "thespeedx_socks4",
       "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt",
       "success": true,
-      "proxies_found": 2350,
-      "elapsed_ms": 481.9,
+      "proxies_found": 2490,
+      "elapsed_ms": 293.59,
       "error": null,
       "health_score": 100.0
     },
@@ -59,8 +59,8 @@
       "name": "thespeedx_socks5",
       "url": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
       "success": true,
-      "proxies_found": 1936,
-      "elapsed_ms": 505.0,
+      "proxies_found": 2178,
+      "elapsed_ms": 310.05,
       "error": null,
       "health_score": 100.0
     },
@@ -68,8 +68,8 @@
       "name": "monosans_http",
       "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt",
       "success": true,
-      "proxies_found": 377,
-      "elapsed_ms": 464.01,
+      "proxies_found": 833,
+      "elapsed_ms": 332.98,
       "error": null,
       "health_score": 100.0
     },
@@ -77,8 +77,8 @@
       "name": "monosans_socks4",
       "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks4.txt",
       "success": true,
-      "proxies_found": 72,
-      "elapsed_ms": 382.37,
+      "proxies_found": 47,
+      "elapsed_ms": 402.71,
       "error": null,
       "health_score": 100.0
     },
@@ -86,8 +86,8 @@
       "name": "monosans_socks5",
       "url": "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt",
       "success": true,
-      "proxies_found": 67,
-      "elapsed_ms": 509.23,
+      "proxies_found": 91,
+      "elapsed_ms": 403.49,
       "error": null,
       "health_score": 100.0
     },
@@ -96,7 +96,7 @@
       "url": "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt",
       "success": true,
       "proxies_found": 400,
-      "elapsed_ms": 558.05,
+      "elapsed_ms": 557.89,
       "error": null,
       "health_score": 100.0
     },
@@ -105,7 +105,7 @@
       "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http.txt",
       "success": true,
       "proxies_found": 1801,
-      "elapsed_ms": 491.88,
+      "elapsed_ms": 439.91,
       "error": null,
       "health_score": 100.0
     },
@@ -114,7 +114,7 @@
       "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-https.txt",
       "success": true,
       "proxies_found": 2161,
-      "elapsed_ms": 381.43,
+      "elapsed_ms": 420.77,
       "error": null,
       "health_score": 100.0
     },
@@ -123,7 +123,7 @@
       "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt",
       "success": true,
       "proxies_found": 1603,
-      "elapsed_ms": 392.3,
+      "elapsed_ms": 453.2,
       "error": null,
       "health_score": 100.0
     },
@@ -132,7 +132,7 @@
       "url": "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks5.txt",
       "success": true,
       "proxies_found": 405,
-      "elapsed_ms": 555.39,
+      "elapsed_ms": 318.3,
       "error": null,
       "health_score": 100.0
     },
@@ -141,7 +141,7 @@
       "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt",
       "success": true,
       "proxies_found": 823,
-      "elapsed_ms": 444.55,
+      "elapsed_ms": 339.32,
       "error": null,
       "health_score": 100.0
     },
@@ -150,7 +150,7 @@
       "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt",
       "success": true,
       "proxies_found": 13,
-      "elapsed_ms": 368.54,
+      "elapsed_ms": 341.26,
       "error": null,
       "health_score": 100.0
     },
@@ -159,7 +159,7 @@
       "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt",
       "success": true,
       "proxies_found": 661,
-      "elapsed_ms": 438.19,
+      "elapsed_ms": 323.41,
       "error": null,
       "health_score": 100.0
     },
@@ -168,7 +168,7 @@
       "url": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt",
       "success": true,
       "proxies_found": 279,
-      "elapsed_ms": 354.08,
+      "elapsed_ms": 325.62,
       "error": null,
       "health_score": 100.0
     },
@@ -176,8 +176,8 @@
       "name": "hookzof_socks5",
       "url": "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt",
       "success": true,
-      "proxies_found": 211,
-      "elapsed_ms": 510.07,
+      "proxies_found": 149,
+      "elapsed_ms": 266.92,
       "error": null,
       "health_score": 100.0
     },
@@ -186,7 +186,7 @@
       "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3551.54,
+      "elapsed_ms": 4443.41,
       "error": "GET https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt'",
       "health_score": 0.0
     },
@@ -195,7 +195,7 @@
       "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3392.96,
+      "elapsed_ms": 4417.87,
       "error": "GET https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt'",
       "health_score": 0.0
     },
@@ -204,7 +204,7 @@
       "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3629.95,
+      "elapsed_ms": 4241.83,
       "error": "GET https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt'",
       "health_score": 0.0
     },
@@ -213,7 +213,7 @@
       "url": "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3512.96,
+      "elapsed_ms": 4149.5,
       "error": "GET https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt'",
       "health_score": 0.0
     },
@@ -221,8 +221,8 @@
       "name": "sunny9577_proxy",
       "url": "https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt",
       "success": true,
-      "proxies_found": 1393,
-      "elapsed_ms": 368.02,
+      "proxies_found": 1451,
+      "elapsed_ms": 464.57,
       "error": null,
       "health_score": 100.0
     },
@@ -230,8 +230,8 @@
       "name": "roosterkid_https",
       "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt",
       "success": true,
-      "proxies_found": 50,
-      "elapsed_ms": 460.69,
+      "proxies_found": 76,
+      "elapsed_ms": 393.18,
       "error": null,
       "health_score": 100.0
     },
@@ -239,8 +239,8 @@
       "name": "roosterkid_socks4",
       "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt",
       "success": true,
-      "proxies_found": 125,
-      "elapsed_ms": 438.61,
+      "proxies_found": 120,
+      "elapsed_ms": 439.9,
       "error": null,
       "health_score": 100.0
     },
@@ -248,8 +248,8 @@
       "name": "roosterkid_socks5",
       "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS5_RAW.txt",
       "success": true,
-      "proxies_found": 6,
-      "elapsed_ms": 466.22,
+      "proxies_found": 5,
+      "elapsed_ms": 607.69,
       "error": null,
       "health_score": 100.0
     },
@@ -258,7 +258,7 @@
       "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/http.txt",
       "success": true,
       "proxies_found": 101618,
-      "elapsed_ms": 3246.76,
+      "elapsed_ms": 1794.23,
       "error": null,
       "health_score": 100.0
     },
@@ -267,7 +267,7 @@
       "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks4.txt",
       "success": true,
       "proxies_found": 89708,
-      "elapsed_ms": 1359.47,
+      "elapsed_ms": 4059.53,
       "error": null,
       "health_score": 100.0
     },
@@ -276,7 +276,7 @@
       "url": "https://raw.githubusercontent.com/MuRongPIG/Proxy-Master/main/socks5.txt",
       "success": true,
       "proxies_found": 100661,
-      "elapsed_ms": 2242.0,
+      "elapsed_ms": 2871.55,
       "error": null,
       "health_score": 100.0
     },
@@ -284,8 +284,8 @@
       "name": "proxifly_all",
       "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/all/data.txt",
       "success": true,
-      "proxies_found": 2159,
-      "elapsed_ms": 460.1,
+      "proxies_found": 2043,
+      "elapsed_ms": 356.7,
       "error": null,
       "health_score": 100.0
     },
@@ -293,8 +293,8 @@
       "name": "proxifly_http",
       "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/http/data.txt",
       "success": true,
-      "proxies_found": 619,
-      "elapsed_ms": 507.75,
+      "proxies_found": 670,
+      "elapsed_ms": 313.88,
       "error": null,
       "health_score": 100.0
     },
@@ -302,8 +302,8 @@
       "name": "proxifly_socks4",
       "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks4/data.txt",
       "success": true,
-      "proxies_found": 297,
-      "elapsed_ms": 446.16,
+      "proxies_found": 217,
+      "elapsed_ms": 339.78,
       "error": null,
       "health_score": 100.0
     },
@@ -311,8 +311,8 @@
       "name": "proxifly_socks5",
       "url": "https://raw.githubusercontent.com/proxifly/free-proxy-list/main/proxies/protocols/socks5/data.txt",
       "success": true,
-      "proxies_found": 211,
-      "elapsed_ms": 342.2,
+      "proxies_found": 149,
+      "elapsed_ms": 518.77,
       "error": null,
       "health_score": 100.0
     },
@@ -320,8 +320,8 @@
       "name": "zloiuser_http",
       "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/http.txt",
       "success": true,
-      "proxies_found": 98,
-      "elapsed_ms": 513.35,
+      "proxies_found": 198,
+      "elapsed_ms": 688.2,
       "error": null,
       "health_score": 100.0
     },
@@ -329,8 +329,8 @@
       "name": "zloiuser_https",
       "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/https.txt",
       "success": true,
-      "proxies_found": 1044,
-      "elapsed_ms": 654.29,
+      "proxies_found": 976,
+      "elapsed_ms": 400.15,
       "error": null,
       "health_score": 100.0
     },
@@ -338,8 +338,8 @@
       "name": "zloiuser_socks4",
       "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks4.txt",
       "success": true,
-      "proxies_found": 68,
-      "elapsed_ms": 342.53,
+      "proxies_found": 66,
+      "elapsed_ms": 607.59,
       "error": null,
       "health_score": 100.0
     },
@@ -347,8 +347,8 @@
       "name": "zloiuser_socks5",
       "url": "https://raw.githubusercontent.com/zloi-user/hideip.me/main/socks5.txt",
       "success": true,
-      "proxies_found": 69,
-      "elapsed_ms": 444.04,
+      "proxies_found": 82,
+      "elapsed_ms": 606.77,
       "error": null,
       "health_score": 100.0
     },
@@ -356,8 +356,8 @@
       "name": "anonymouswork_http",
       "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/http_proxies.txt",
       "success": true,
-      "proxies_found": 2868,
-      "elapsed_ms": 433.27,
+      "proxies_found": 2908,
+      "elapsed_ms": 486.52,
       "error": null,
       "health_score": 100.0
     },
@@ -365,8 +365,8 @@
       "name": "anonymouswork_socks4",
       "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks4_proxies.txt",
       "success": true,
-      "proxies_found": 533,
-      "elapsed_ms": 465.55,
+      "proxies_found": 594,
+      "elapsed_ms": 552.41,
       "error": null,
       "health_score": 100.0
     },
@@ -374,8 +374,8 @@
       "name": "anonymouswork_socks5",
       "url": "https://raw.githubusercontent.com/Anonym0usWork1221/Free-Proxies/main/proxy_files/socks5_proxies.txt",
       "success": true,
-      "proxies_found": 513,
-      "elapsed_ms": 338.6,
+      "proxies_found": 599,
+      "elapsed_ms": 423.43,
       "error": null,
       "health_score": 100.0
     },
@@ -384,7 +384,7 @@
       "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3488.9,
+      "elapsed_ms": 4500.24,
       "error": "GET https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt'",
       "health_score": 0.0
     },
@@ -393,7 +393,7 @@
       "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3577.8,
+      "elapsed_ms": 4416.51,
       "error": "GET https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt'",
       "health_score": 0.0
     },
@@ -402,7 +402,7 @@
       "url": "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt",
       "success": false,
       "proxies_found": 0,
-      "elapsed_ms": 3547.31,
+      "elapsed_ms": 4416.34,
       "error": "GET https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt failed: 404, message='Not Found', url='https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt'",
       "health_score": 0.0
     },
@@ -411,7 +411,7 @@
       "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/http.txt",
       "success": true,
       "proxies_found": 524,
-      "elapsed_ms": 345.47,
+      "elapsed_ms": 269.24,
       "error": null,
       "health_score": 100.0
     },
@@ -420,7 +420,7 @@
       "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/https.txt",
       "success": true,
       "proxies_found": 6,
-      "elapsed_ms": 512.97,
+      "elapsed_ms": 400.04,
       "error": null,
       "health_score": 100.0
     },
@@ -429,7 +429,7 @@
       "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks4.txt",
       "success": true,
       "proxies_found": 165,
-      "elapsed_ms": 356.64,
+      "elapsed_ms": 270.54,
       "error": null,
       "health_score": 100.0
     },
@@ -438,7 +438,7 @@
       "url": "https://raw.githubusercontent.com/vakhov/fresh-proxy-list/master/socks5.txt",
       "success": true,
       "proxies_found": 21,
-      "elapsed_ms": 380.05,
+      "elapsed_ms": 400.89,
       "error": null,
       "health_score": 100.0
     },
@@ -446,8 +446,8 @@
       "name": "tuanminpay_http",
       "url": "https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/http.txt",
       "success": true,
-      "proxies_found": 6868,
-      "elapsed_ms": 621.99,
+      "proxies_found": 7518,
+      "elapsed_ms": 665.24,
       "error": null,
       "health_score": 100.0
     },
@@ -455,8 +455,8 @@
       "name": "tuanminpay_socks5",
       "url": "https://raw.githubusercontent.com/TuanMinPay/live-proxy/master/socks5.txt",
       "success": true,
-      "proxies_found": 3264,
-      "elapsed_ms": 647.37,
+      "proxies_found": 3779,
+      "elapsed_ms": 516.22,
       "error": null,
       "health_score": 100.0
     },
@@ -464,8 +464,8 @@
       "name": "proxyspace_http",
       "url": "https://proxyspace.pro/http.txt",
       "success": true,
-      "proxies_found": 3583,
-      "elapsed_ms": 3316.41,
+      "proxies_found": 4248,
+      "elapsed_ms": 4384.86,
       "error": null,
       "health_score": 100.0
     },
@@ -473,8 +473,8 @@
       "name": "proxyspace_https",
       "url": "https://proxyspace.pro/https.txt",
       "success": true,
-      "proxies_found": 156,
-      "elapsed_ms": 3317.39,
+      "proxies_found": 181,
+      "elapsed_ms": 4153.21,
       "error": null,
       "health_score": 100.0
     },
@@ -482,8 +482,8 @@
       "name": "proxyspace_socks4",
       "url": "https://proxyspace.pro/socks4.txt",
       "success": true,
-      "proxies_found": 3793,
-      "elapsed_ms": 3294.09,
+      "proxies_found": 3904,
+      "elapsed_ms": 4415.06,
       "error": null,
       "health_score": 100.0
     },
@@ -491,8 +491,8 @@
       "name": "proxyspace_socks5",
       "url": "https://proxyspace.pro/socks5.txt",
       "success": true,
-      "proxies_found": 2010,
-      "elapsed_ms": 3270.48,
+      "proxies_found": 2249,
+      "elapsed_ms": 4349.32,
       "error": null,
       "health_score": 100.0
     },
@@ -501,7 +501,7 @@
       "url": "https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&sort_by=lastChecked&sort_type=desc",
       "success": true,
       "proxies_found": 500,
-      "elapsed_ms": 1385.83,
+      "elapsed_ms": 692.94,
       "error": null,
       "health_score": 100.0
     },
@@ -510,7 +510,7 @@
       "url": "https://free-proxy-list.net/",
       "success": true,
       "proxies_found": 300,
-      "elapsed_ms": 548.91,
+      "elapsed_ms": 602.77,
       "error": null,
       "health_score": 100.0
     },
@@ -519,7 +519,7 @@
       "url": "https://www.sslproxies.org/",
       "success": true,
       "proxies_found": 100,
-      "elapsed_ms": 3257.32,
+      "elapsed_ms": 4109.16,
       "error": null,
       "health_score": 100.0
     },
@@ -528,7 +528,7 @@
       "url": "https://www.us-proxy.org/",
       "success": true,
       "proxies_found": 200,
-      "elapsed_ms": 3482.38,
+      "elapsed_ms": 4213.86,
       "error": null,
       "health_score": 100.0
     },
@@ -537,7 +537,7 @@
       "url": "https://www.socks-proxy.net/",
       "success": true,
       "proxies_found": 300,
-      "elapsed_ms": 3458.4,
+      "elapsed_ms": 4141.44,
       "error": null,
       "health_score": 100.0
     },
@@ -545,8 +545,8 @@
       "name": "openproxylist_http",
       "url": "https://api.openproxylist.xyz/http.txt",
       "success": true,
-      "proxies_found": 5479,
-      "elapsed_ms": 3389.89,
+      "proxies_found": 6556,
+      "elapsed_ms": 794.62,
       "error": null,
       "health_score": 100.0
     },
@@ -554,8 +554,8 @@
       "name": "openproxylist_socks4",
       "url": "https://api.openproxylist.xyz/socks4.txt",
       "success": true,
-      "proxies_found": 3830,
-      "elapsed_ms": 3356.28,
+      "proxies_found": 3969,
+      "elapsed_ms": 743.03,
       "error": null,
       "health_score": 100.0
     },
@@ -563,8 +563,8 @@
       "name": "openproxylist_socks5",
       "url": "https://api.openproxylist.xyz/socks5.txt",
       "success": true,
-      "proxies_found": 2469,
-      "elapsed_ms": 3332.3,
+      "proxies_found": 2755,
+      "elapsed_ms": 713.04,
       "error": null,
       "health_score": 100.0
     }
