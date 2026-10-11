@@ -448,3 +448,12 @@ sources:
     scraper_type: regex_text
     default_protocol: socks5
     enabled: true
+
+  # ------------------------------------------------------------------
+  # rcloak.com API
+  # ------------------------------------------------------------------
+  - name: rcloak_all
+    url: https://rcloak.com/api/proxies/raw?protocol=all
+    scraper_type: regex_text
+    default_protocol: http
+    enabled: true
