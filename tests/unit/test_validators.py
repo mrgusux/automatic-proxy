@@ -154,9 +154,14 @@ async def test_dnsbl_rejects_invalid_ip() -> None:
 
 def test_geo_locator_city_and_country_databases() -> None:
     import importlib
+    import os
+    import pytest
     geo_mod = importlib.import_module("src.validators.05_geo_locator")
     city_db = "data/geoip/GeoLite2-City.mmdb"
     country_db = "data/geoip/GeoLite2-Country.mmdb"
+
+    if not os.path.exists(country_db) and not os.path.exists(city_db):
+        pytest.skip("GeoIP mmdb databases not present in environment")
 
     p = Proxy(ip="8.8.8.8", port=80, protocol=Protocol.HTTP)
     # Test City DB locate
