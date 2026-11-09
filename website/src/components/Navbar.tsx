@@ -39,7 +39,7 @@ export function Navbar() {
           </a>
 
           <a
-            href="https://github.com/mrguseynov/automatic-proxy"
+            href="https://github.com/mrgusux/automatic-proxy"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"

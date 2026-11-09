@@ -6,25 +6,33 @@
 
 Scrapes 100+ publicly shared proxy sources, validates them across **5 dimensions**,
 enriches metadata, and exports clean, deduplicated, ready-to-use lists — every 3 hours,
-with zero servers to maintain..
+with zero servers to maintain.
+
+<br/>
+
+[![Live Website](https://img.shields.io/badge/Live%20Website-automatic--proxy.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://automatic-proxy.vercel.app)
 
 <br/>
 
 ![CI](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square&logo=python&logoColor=white)
 ![Async](https://img.shields.io/badge/powered%20by-asyncio%20%2B%20aiohttp-1f6feb?style=flat-square)
+![Next.js 16](https://img.shields.io/badge/portal-Next.js%2016-000000?style=flat-square&logo=next.js&logoColor=white)
 ![Pydantic](https://img.shields.io/badge/validation-pydantic%20v2-e92063?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 ![Maintenance](https://img.shields.io/badge/maintained-yes-success?style=flat-square)
 
 <br/>
 
-<!-- Live stats badges (auto-updated from outputs/metadata/manifest.json on GitHub).
-     Replace USER/REPO with your GitHub repository path. -->
+<!-- Live stats badges (auto-updated from outputs/metadata/manifest.json on GitHub). -->
 
-![Active Proxies](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=2ea44f&label=Live%20Proxies&query=%24.summary.alive&url=https%3A%2F%2Fraw.githubusercontent.com%2FUSER%2FREPO%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)
-![Avg Latency](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=blue&label=Avg%20Latency%20(ms)&query=%24.summary.average_latency_ms&url=https%3A%2F%2Fraw.githubusercontent.com%2FUSER%2FREPO%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)
-![Sources OK](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=orange&label=Sources%20OK&query=%24.summary.sources_ok&url=https%3A%2F%2Fraw.githubusercontent.com%2FUSER%2FREPO%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)
+[![Active Proxies](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=2ea44f&label=Live%20Proxies&query=%24.summary.alive&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmrgusux%2Fautomatic-proxy%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)](https://automatic-proxy.vercel.app)
+[![Avg Latency](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=blue&label=Avg%20Latency%20(ms)&query=%24.summary.average_latency_ms&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmrgusux%2Fautomatic-proxy%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)](https://automatic-proxy.vercel.app)
+[![Sources OK](https://img.shields.io/badge/dynamic/json?style=for-the-badge&color=orange&label=Sources%20OK&query=%24.summary.sources_ok&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmrgusux%2Fautomatic-proxy%2Fmain%2Foutputs%2Fmetadata%2Fmanifest.json)](https://automatic-proxy.vercel.app)
+
+<br/>
+
+[🌐 Live Explorer & Edge API](https://automatic-proxy.vercel.app) • [📥 Direct Downloads](#-direct-download-links) • [Report Issue](https://github.com/mrgusux/automatic-proxy/issues) • [Architecture](docs/ARCHITECTURE.md)
 
 </div>
 
@@ -34,6 +42,7 @@ with zero servers to maintain..
 
 - [Why this project](#-why-this-project)
 - [Features](#-features)
+- [Web Portal & Edge API](#-web-portal--edge-api)
 - [Architecture](#-architecture)
 - [The 5-Dimensional Validation Engine](#-the-5-dimensional-validation-engine)
 - [Quick Start](#-quick-start)
@@ -79,6 +88,22 @@ project solves that by running a rigorous, fully automated pipeline that:
 | **Outputs** | Master list + segmented by country / protocol / anonymity + JSON manifest |
 | **Type safety** | Strict Pydantic v2 models, full `mypy --strict`, `ruff` linting |
 | **Automation** | 5 GitHub Actions: orchestrator, security audit, health monitor, auto-release, cache cleanup |
+
+---
+
+## 🌐 Web Portal & Edge API
+
+Explore, search, filter, and export proxies with zero latency using our interactive web portal deployed on Vercel:
+
+[![Live Website](https://img.shields.io/badge/Live%20Website-automatic--proxy.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://automatic-proxy.vercel.app)
+
+- **Live URL**: [https://automatic-proxy.vercel.app](https://automatic-proxy.vercel.app)
+- **Interactive Country Explorer**: Filter thousands of verified proxies by ISO Country code, protocol (HTTP, HTTPS, SOCKS4, SOCKS5), anonymity level (Elite, Anonymous, Transparent), and real-time latency.
+- **Vercel Edge REST API**: Query live proxy feeds programmatically:
+  - `GET https://automatic-proxy.vercel.app/api/v1/proxies?country=US&protocol=socks5`
+  - `GET https://automatic-proxy.vercel.app/api/v1/proxies?anonymity=elite&format=json&limit=50`
+  - `GET https://automatic-proxy.vercel.app/api/v1/proxies?format=txt`
+- **One-Click Exports**: Copy or download country-specific and protocol-specific proxy bundles instantly.
 
 ---
 
@@ -142,20 +167,27 @@ That's it. Validated proxies land in [`outputs/`](outputs/).
 
 ## 📦 Outputs
 
+Every scheduled cycle generates both monolithic and finely partitioned outputs:
+
 ```text
 outputs/
 ├── proxies.txt                     # Master list — best proxies, highest score first
 ├── by_country/
-│   ├── BD_proxies.txt
-│   ├── US_proxies.txt
-│   └── <ISO>_proxies.txt
+│   ├── US.txt                      # All protocols for United States
+│   ├── US_http.txt                 # HTTP-only proxies for United States
+│   ├── US_https.txt                # HTTPS-only proxies for United States
+│   ├── US_socks4.txt               # SOCKS4-only proxies for United States
+│   ├── US_socks5.txt               # SOCKS5-only proxies for United States
+│   ├── BD.txt                      # All proxies for Bangladesh
+│   ├── DE.txt / DE_http.txt        # Germany master & protocol segmented
+│   └── <CC>.txt / <CC>_<proto>.txt # Flat 2-letter ISO country code exports
 ├── by_protocol/
-│   ├── http.txt
-│   ├── socks4.txt
-│   └── socks5.txt
+│   ├── http.txt                    # HTTP protocol only
+│   ├── socks4.txt                  # SOCKS4 protocol only
+│   └── socks5.txt                  # SOCKS5 protocol only
 ├── by_anonymity/
-│   ├── elite.txt
-│   └── anonymous.txt
+│   ├── elite.txt                   # High anonymity (L1 Elite)
+│   └── anonymous.txt               # Anonymous (L2)
 └── metadata/
     ├── manifest.json               # Totals, distribution, average latency
     └── source_health_report.json   # Which sources performed well
@@ -163,13 +195,19 @@ outputs/
 
 ### 🔗 Direct download links
 
-Once running on GitHub, you can consume lists directly via raw URLs
-(replace `USER/REPO`):
+Consume lists directly via GitHub raw endpoints:
 
 ```text
-https://raw.githubusercontent.com/USER/REPO/main/outputs/proxies.txt
-https://raw.githubusercontent.com/USER/REPO/main/outputs/by_protocol/socks5.txt
-https://raw.githubusercontent.com/USER/REPO/main/outputs/by_anonymity/elite.txt
+# Master lists
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/proxies.txt
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_protocol/socks5.txt
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_anonymity/elite.txt
+
+# Flat country-wise & protocol segmented lists
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_country/US.txt
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_country/US_socks5.txt
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_country/DE.txt
+https://raw.githubusercontent.com/mrgusux/automatic-proxy/main/outputs/by_country/BD.txt
 ```
 
 ---

@@ -41,7 +41,7 @@ export function Footer() {
           <p>© {new Date().getFullYear()} AutomaticProxy. Open-source under MIT License.</p>
           <div className="flex items-center gap-4">
             <a href="/api/v1/proxies" className="hover:text-cyan-400 transition-colors">Edge API</a>
-            <a href="https://github.com/mrguseynov/automatic-proxy" className="hover:text-cyan-400 transition-colors">GitHub</a>
+            <a href="https://github.com/mrgusux/automatic-proxy" className="hover:text-cyan-400 transition-colors">GitHub</a>
             <span>Tested & Verified Alive</span>
           </div>
         </div>

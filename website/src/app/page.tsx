@@ -41,7 +41,7 @@ export default function HomePage() {
               <span className="text-[11px] font-mono text-slate-400 ml-2 font-medium">curl quickstart</span>
             </div>
             <CopyButton
-              text="curl -s 'https://proxy.veloroute.dev/api/v1/proxies?protocol=socks5&country=US' | head -n 5"
+              text="curl -s 'https://automatic-proxy.vercel.app/api/v1/proxies?protocol=socks5&country=US' | head -n 5"
               label="Copy"
             />
           </div>
