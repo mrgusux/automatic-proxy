@@ -2,24 +2,24 @@
 # All values are read by src/utils/config_loader.py into the Settings model.
 
 # Concurrency limits.
-scrape_concurrency: 100
-validate_concurrency: 1000
+scrape_concurrency: 150
+validate_concurrency: 1500
 
 # Timeouts (seconds).
-scrape_timeout: 15.0
-tcp_timeout: 3.0
-validate_timeout: 8.0
+scrape_timeout: 10.0
+tcp_timeout: 1.5
+validate_timeout: 4.5
 
 # Retry policy.
-max_retries: 2
-retry_backoff: 0.3
+max_retries: 0
+retry_backoff: 0.2
 
 # Token-bucket rate limiting (prevents IP bans).
-rate_limit_per_sec: 40.0
-rate_limit_burst: 80
+rate_limit_per_sec: 100.0
+rate_limit_burst: 200
 
 # Validation thresholds.
-max_latency_ms: 8000.0
+max_latency_ms: 6000.0
 
 # Output.
 max_alive_output: 50000

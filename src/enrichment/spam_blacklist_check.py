@@ -14,33 +14,25 @@ DNSBL_SERVERS: list[str] = [
     "zen.spamhaus.org",
     "bl.spamcop.net",
     "b.barracudacentral.org",
-    "dnsbl-1.uceprotect.net",
-    "dnsbl-2.uceprotect.net",
-    "dnsbl-3.uceprotect.net",
-    "cbl.abuseat.org",
-    "dyna.spamrats.com",
-    "noptr.spamrats.com",
-    "spam.spamrats.com",
-    "all.s5h.net",
-    "rbl.interserver.net",
-    "dynip.rocksor.com",
-    "netscan.rbl.msrbl.net",
-    "vedges.ca",
-    "bl.mailspike.org",
 ]
 
 
 class SpamBlacklistChecker:
     """Check if a proxy IP is listed in DNSBL servers."""
 
-    def __init__(self, enabled: bool = True, timeout: float = 3.0) -> None:
+    def __init__(self, enabled: bool = True, timeout: float = 1.0) -> None:
         self._enabled = enabled
         self._timeout = timeout
+        self._cache: dict[str, bool] = {}
 
     async def is_blacklisted(self, proxy: Proxy) -> bool:
         if not self._enabled:
             return False
-        return await self._check_dnsbl(proxy.ip)
+        if proxy.ip in self._cache:
+            return self._cache[proxy.ip]
+        result = await self._check_dnsbl(proxy.ip)
+        self._cache[proxy.ip] = result
+        return result
 
     async def _check_dnsbl(self, ip: str) -> bool:
         parts = ip.strip().split(".")
@@ -48,13 +40,25 @@ class SpamBlacklistChecker:
             return False
         reversed_ip = ".".join(reversed(parts))
         tasks = [
-            self._query_dnsbl(server, reversed_ip) for server in DNSBL_SERVERS
+            asyncio.create_task(self._query_dnsbl(server, reversed_ip))
+            for server in DNSBL_SERVERS
         ]
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        listed_count = sum(1 for r in results if r is True)
-        if listed_count > 0:
-            logger.info("IP %s found in %d DNSBL servers", ip, listed_count)
-        return listed_count > 0
+        try:
+            for fut in asyncio.as_completed(tasks):
+                try:
+                    res = await fut
+                    if res is True:
+                        # Cancel remaining tasks early
+                        for t in tasks:
+                            if not t.done():
+                                t.cancel()
+                        logger.info("IP %s found in DNSBL", ip)
+                        return True
+                except Exception:
+                    continue
+        except Exception:
+            pass
+        return False
 
     async def _query_dnsbl(self, dnsbl_server: str, reversed_ip: str) -> bool:
         query = f"{reversed_ip}.{dnsbl_server}"

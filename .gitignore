@@ -43,3 +43,7 @@ outputs/**
 # OS
 .DS_Store
 Thumbs.db
+
+# Internal design guidelines (not tracked in public repo)
+DESIGN.md
+

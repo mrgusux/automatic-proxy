@@ -51,6 +51,10 @@ def main() -> int:
             "GeoLite2-ASN.mmdb": "https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb",
         }
         for name, url in mirrors.items():
+            target = DEST / name
+            if target.exists() and target.stat().st_size > 100000:
+                print(f"  Existing {name} found ({target.stat().st_size} bytes), skipping re-download.")
+                continue
             print(f"Downloading {name} ...")
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; VeloRouteGeoIP/1.0)"})
