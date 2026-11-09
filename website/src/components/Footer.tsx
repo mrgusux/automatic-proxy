@@ -13,7 +13,7 @@ export function Footer() {
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
               All proxies undergo automated multi-stage handshake testing, latency scoring, MaxMind GeoIP resolution,
-              and anonymity classification every 30 minutes.
+              and anonymity classification every 3 hours.
             </p>
           </div>
 

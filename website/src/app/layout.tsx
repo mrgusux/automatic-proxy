@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "AutomaticProxy — Global Free Proxy Explorer & Verification Engine",
   description:
-    "10,000+ verified alive HTTP, HTTPS, SOCKS4, and SOCKS5 proxies segmented by country, latency, and anonymity. Automated testing every 30 minutes with Edge API.",
+    "10,000+ verified alive HTTP, HTTPS, SOCKS4, and SOCKS5 proxies segmented by country, latency, and anonymity. Automated testing every 3 hours with Edge API.",
   keywords: [
     "proxy list",
     "free proxies",
