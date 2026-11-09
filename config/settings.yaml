@@ -36,5 +36,5 @@ country_mapping_file: config/country_mapping.json
 validation_rules_file: config/validation_rules.yaml
 
 # Enrichment toggles.
-enable_blacklist_check: true
+enable_blacklist_check: false
 enable_asn_resolution: true

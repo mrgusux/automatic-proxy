@@ -38,6 +38,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 async def _run_pipeline(config_path: str, sources_path: str) -> int:
+    import concurrent.futures
+    loop = asyncio.get_running_loop()
+    loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=64))
+
     from src.collectors.factory import build_collector
     from src.core.pipeline_manager import PipelineManager
     from src.deduplication.early_aggregator import build_deduplicator
