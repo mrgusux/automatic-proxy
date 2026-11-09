@@ -71,6 +71,7 @@ class SpamBlacklistChecker:
                 entry[4][0]
                 for entry in addr_info
                 if entry[4]
+                and isinstance(entry[4][0], str)
                 and entry[4][0].startswith("127.")
                 and not entry[4][0].startswith("127.255.255.")
             ]
