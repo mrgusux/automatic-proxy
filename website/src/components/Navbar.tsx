@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, Download, Github, Terminal, Zap } from "lucide-react";
+import { Github, Terminal, Zap } from "lucide-react";
 
 export function Navbar() {
   return (

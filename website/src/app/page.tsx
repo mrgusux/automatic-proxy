@@ -3,7 +3,7 @@ import { getProxyDataset } from "@/lib/proxy-data";
 import { StatsRibbon } from "@/components/StatsRibbon";
 import { ProxyExplorer } from "@/components/ProxyExplorer";
 import { CopyButton } from "@/components/CopyButton";
-import { Globe, Terminal, ArrowRight, ShieldCheck, Download, Code2 } from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 
 export default function HomePage() {
   const dataset = getProxyDataset();

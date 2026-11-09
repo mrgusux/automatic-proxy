@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
   const country = searchParams.get("country")?.toUpperCase();
   const protocol = searchParams.get("protocol")?.toLowerCase();
   const anonymity = searchParams.get("anonymity")?.toLowerCase();
-  const rawMaxLatency = searchParams.get("max_latency");
+  const rawMaxLatency =
+    searchParams.get("max_latency") || searchParams.get("maxLatency") || searchParams.get("latency");
   const parsedLatency = rawMaxLatency ? parseInt(rawMaxLatency, 10) : null;
   const maxLatency = parsedLatency !== null && !isNaN(parsedLatency) && parsedLatency > 0 ? parsedLatency : null;
 

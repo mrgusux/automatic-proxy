@@ -3,7 +3,6 @@
 import React, { useState, useMemo } from "react";
 import {
   Search,
-  Filter,
   Download,
   Copy,
   Globe,
@@ -11,14 +10,11 @@ import {
   Shield,
   Layers,
   ArrowDownToLine,
-  ExternalLink,
   Check,
   Terminal,
   ChevronRight,
-  Sliders,
-  Sparkles,
 } from "lucide-react";
-import { CountryGroup, ProxyItem, Protocol, Anonymity, ProxySummary } from "@/lib/types";
+import { CountryGroup, ProxyItem, ProxySummary } from "@/lib/types";
 import { getCountryFlag, getCountryName } from "@/lib/country-flags";
 import { CopyButton } from "./CopyButton";
 
@@ -550,7 +546,7 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                       </td>
 
                       <td className="py-3 px-4">
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col gap-1 w-24">
                           <span
                             className={`font-mono text-xs font-bold ${
                               isLowLatency
@@ -562,6 +558,20 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                           >
                             {proxy.latency} ms
                           </span>
+                          <div className="w-full bg-[#161616] border border-[#2B2B2B] h-1.5 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${
+                                isLowLatency
+                                  ? "bg-[#0073F5]"
+                                  : isMediumLatency
+                                  ? "bg-[#66AEFF]"
+                                  : "bg-[#FF0000]"
+                              }`}
+                              style={{
+                                width: `${Math.min(100, Math.max(12, Math.round((1000 - proxy.latency) / 10)))}%`,
+                              }}
+                            />
+                          </div>
                         </div>
                       </td>
 
