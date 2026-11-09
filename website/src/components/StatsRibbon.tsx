@@ -9,36 +9,32 @@ interface StatsRibbonProps {
 export function StatsRibbon({ summary }: StatsRibbonProps) {
   const stats = [
     {
-      label: "Verified Alive Proxies",
+      label: "Verified Active Nodes",
       value: summary.totalAlive.toLocaleString(),
       sub: "Active Handshakes",
       icon: Server,
-      color: "text-emerald-400",
-      bg: "bg-emerald-500/10 border-emerald-500/20",
+      color: "text-[#0073F5]",
     },
     {
       label: "Average Latency",
       value: `${summary.averageLatencyMs} ms`,
       sub: "Global Round-Trip",
       icon: Zap,
-      color: "text-cyan-400",
-      bg: "bg-cyan-500/10 border-cyan-500/20",
+      color: "text-[#66AEFF]",
     },
     {
-      label: "Countries Covered",
+      label: "Geographic Subnets",
       value: `${summary.countriesCount} Regions`,
       sub: "MaxMind Geo-Located",
       icon: Globe,
-      color: "text-blue-400",
-      bg: "bg-blue-500/10 border-blue-500/20",
+      color: "text-[#0073F5]",
     },
     {
       label: "Elite Anonymity",
       value: `${summary.elitePercentage}%`,
       sub: "Zero Header Leak",
       icon: ShieldCheck,
-      color: "text-purple-400",
-      bg: "bg-purple-500/10 border-purple-500/20",
+      color: "text-[#9E9EFF]",
     },
   ];
 
@@ -49,17 +45,17 @@ export function StatsRibbon({ summary }: StatsRibbonProps) {
         return (
           <div
             key={i}
-            className="glass-card p-4 rounded-2xl flex items-center gap-3.5 relative overflow-hidden"
+            className="bg-[#1C1C1C] border border-[#2B2B2B] hover:border-[#333333] p-4 rounded-lg flex items-center gap-3.5 transition-colors"
           >
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${s.bg}`}>
-              <Icon className={`w-5 h-5 ${s.color}`} />
+            <div className="w-10 h-10 rounded-md bg-[#161616] border border-[#2B2B2B] flex items-center justify-center shrink-0">
+              <Icon className={`w-4 h-4 ${s.color}`} />
             </div>
             <div className="min-w-0">
-              <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+              <div className="text-xl sm:text-2xl font-semibold text-white tracking-tight font-mono">
                 {s.value}
               </div>
-              <div className="text-xs font-medium text-slate-400 truncate">{s.label}</div>
-              <div className="text-[10px] text-slate-500">{s.sub}</div>
+              <div className="text-xs font-medium text-[#A3A3A3] truncate">{s.label}</div>
+              <div className="text-[10px] text-[#666666] font-mono">{s.sub}</div>
             </div>
           </div>
         );

@@ -193,39 +193,39 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-xl bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 shadow-2xl backdrop-blur-xl animate-fade-in text-xs font-semibold">
-          <Check className="w-4 h-4 text-cyan-400" />
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-md bg-[#161616] text-white border border-[#0073F5] shadow-xl text-xs font-mono">
+          <Check className="w-4 h-4 text-[#0073F5]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Control Console */}
-      <div className="glass-panel p-5 sm:p-6 rounded-2xl border border-white/10 space-y-5">
+      <div className="bg-[#161616] p-5 sm:p-6 rounded-lg border border-[#2B2B2B] space-y-5">
         {/* Top Bar: Search + View Tabs */}
         <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
           {/* Search Box */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A3A3A3]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by country, code (US, DE, SG), or IP:port..."
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-900/80 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-[#1C1C1C] border border-[#2B2B2B] rounded-md text-xs sm:text-sm text-white placeholder-[#666666] focus:outline-none focus:border-[#0073F5] transition-colors"
             />
           </div>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-1.5 p-1 bg-slate-950/60 rounded-xl border border-white/5 shrink-0">
+          <div className="flex items-center gap-1.5 p-1 bg-[#1C1C1C] rounded-md border border-[#2B2B2B] shrink-0">
             <button
               onClick={() => {
                 setActiveTab("countries");
                 setSelectedCountryCode(null);
               }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-medium transition-colors ${
                 activeTab === "countries"
-                  ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[#0073F5] text-white"
+                  : "text-[#A3A3A3] hover:text-white"
               }`}
             >
               <Globe className="w-3.5 h-3.5" />
@@ -233,24 +233,24 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
             </button>
             <button
               onClick={() => setActiveTab("proxies")}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-medium transition-colors ${
                 activeTab === "proxies"
-                  ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[#0073F5] text-white"
+                  : "text-[#A3A3A3] hover:text-white"
               }`}
             >
               <Terminal className="w-3.5 h-3.5" />
-              <span>Proxy Inspector ({filteredProxies.length})</span>
+              <span>Subnet Inspector ({filteredProxies.length})</span>
             </button>
           </div>
         </div>
 
         {/* Filter Controls Row */}
-        <div className="pt-4 border-t border-white/5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        <div className="pt-4 border-t border-[#2B2B2B] grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
           {/* Protocol Tabs (5 cols) */}
           <div className="md:col-span-5 space-y-1.5">
-            <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Layers className="w-3 h-3 text-cyan-400" />
+            <label className="text-[10px] font-mono text-[#A3A3A3] uppercase tracking-wider flex items-center gap-1.5">
+              <Layers className="w-3 h-3 text-[#0073F5]" />
               Protocol
             </label>
             <div className="flex flex-wrap gap-1.5">
@@ -258,10 +258,10 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                 <button
                   key={proto.id}
                   onClick={() => setSelectedProtocol(proto.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
                     selectedProtocol === proto.id
-                      ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
-                      : "bg-slate-900/60 hover:bg-slate-800 text-slate-300 border border-white/5"
+                      ? "bg-[#0073F5] text-white font-medium"
+                      : "bg-[#1C1C1C] hover:bg-[#252525] text-[#A3A3A3] border border-[#2B2B2B]"
                   }`}
                 >
                   {proto.label}
@@ -272,17 +272,17 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
 
           {/* Anonymity Level Filter (3 cols) */}
           <div className="md:col-span-3 space-y-1.5">
-            <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Shield className="w-3 h-3 text-purple-400" />
+            <label className="text-[10px] font-mono text-[#A3A3A3] uppercase tracking-wider flex items-center gap-1.5">
+              <Shield className="w-3 h-3 text-[#9E9EFF]" />
               Anonymity
             </label>
             <select
               value={selectedAnonymity}
               onChange={(e) => setSelectedAnonymity(e.target.value)}
-              className="w-full px-3 py-1.5 bg-slate-900/80 border border-white/10 rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              className="w-full px-3 py-1.5 bg-[#1C1C1C] border border-[#2B2B2B] rounded-md text-xs text-white focus:outline-none focus:border-[#0073F5]"
             >
               {anonymityOptions.map((opt) => (
-                <option key={opt.id} value={opt.id} className="bg-slate-900 text-white">
+                <option key={opt.id} value={opt.id} className="bg-[#1C1C1C] text-white">
                   {opt.label}
                 </option>
               ))}
@@ -291,12 +291,12 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
 
           {/* Latency Slider (4 cols) */}
           <div className="md:col-span-4 space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400">
+            <div className="flex items-center justify-between text-[10px] font-mono text-[#A3A3A3]">
               <span className="flex items-center gap-1.5 uppercase tracking-wider">
-                <Gauge className="w-3 h-3 text-emerald-400" />
+                <Gauge className="w-3 h-3 text-[#0073F5]" />
                 Max Latency
               </span>
-              <span className="font-mono text-cyan-400 font-bold">{maxLatency} ms</span>
+              <span className="font-mono text-[#0073F5] font-bold">{maxLatency} ms</span>
             </div>
             <input
               type="range"
@@ -305,24 +305,24 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
               step="25"
               value={maxLatency}
               onChange={(e) => setMaxLatency(Number(e.target.value))}
-              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              className="w-full h-1.5 bg-[#2B2B2B] rounded appearance-none cursor-pointer accent-[#0073F5]"
             />
           </div>
         </div>
 
         {/* Action Bar */}
-        <div className="pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-slate-400">
+        <div className="pt-3 border-t border-[#2B2B2B] flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 text-[#A3A3A3]">
             <span>Showing:</span>
-            <span className="font-semibold text-white">
-              {activeTab === "countries" ? `${filteredCountries.length} countries` : `${filteredProxies.length} proxies`}
+            <span className="font-semibold text-white font-mono">
+              {activeTab === "countries" ? `${filteredCountries.length} subnets` : `${filteredProxies.length} nodes`}
             </span>
             {selectedCountryCode && (
-              <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-medium">
-                Country: {selectedCountryCode}
+              <span className="px-2 py-0.5 rounded bg-[#9E9EFF]/10 text-[#9E9EFF] border border-[#9E9EFF]/20 font-mono text-[11px]">
+                Subnet: {selectedCountryCode}
                 <button
                   onClick={() => setSelectedCountryCode(null)}
-                  className="ml-1.5 text-cyan-400 hover:text-white"
+                  className="ml-1.5 text-white hover:text-[#0073F5]"
                 >
                   ×
                 </button>
@@ -333,14 +333,14 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
           <div className="flex items-center gap-2">
             <button
               onClick={copyFilteredList}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 font-medium transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#1C1C1C] hover:bg-[#252525] text-[#A3A3A3] hover:text-white border border-[#2B2B2B] font-mono text-xs transition-colors"
             >
               <Copy className="w-3.5 h-3.5" />
               <span>Copy Filtered ({filteredProxies.length})</span>
             </button>
             <button
               onClick={downloadFilteredList}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all shadow-md shadow-cyan-500/20"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-[#0073F5] hover:bg-[#0062D6] text-white font-mono text-xs transition-colors"
             >
               <ArrowDownToLine className="w-3.5 h-3.5" />
               <span>Download .txt</span>
@@ -353,14 +353,14 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
       {activeTab === "countries" ? (
         /* Country Grid View */
         <div className="space-y-4">
-          <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-            <span>Click any country to inspect its proxies or download directly:</span>
+          <div className="flex items-center justify-between text-xs text-[#A3A3A3] px-1 font-mono">
+            <span>Click any subnet region to inspect active nodes or download:</span>
             <div className="flex items-center gap-2">
               <span>Sort:</span>
               <button
                 onClick={() => setSortBy("count")}
-                className={`px-2 py-1 rounded ${
-                  sortBy === "count" ? "text-cyan-400 font-semibold" : "hover:text-white"
+                className={`px-2 py-0.5 rounded ${
+                  sortBy === "count" ? "text-white font-bold bg-[#1C1C1C] border border-[#2B2B2B]" : "hover:text-white"
                 }`}
               >
                 Count
@@ -368,8 +368,8 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
               <span>•</span>
               <button
                 onClick={() => setSortBy("name")}
-                className={`px-2 py-1 rounded ${
-                  sortBy === "name" ? "text-cyan-400 font-semibold" : "hover:text-white"
+                className={`px-2 py-0.5 rounded ${
+                  sortBy === "name" ? "text-white font-bold bg-[#1C1C1C] border border-[#2B2B2B]" : "hover:text-white"
                 }`}
               >
                 Name
@@ -388,23 +388,23 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
               return (
                 <div
                   key={country.code}
-                  className="glass-card rounded-2xl p-5 border border-white/5 flex flex-col justify-between group hover:border-cyan-500/40 transition-all"
+                  className="bg-[#1C1C1C] rounded-lg p-5 border border-[#2B2B2B] flex flex-col justify-between hover:border-[#333333] transition-colors"
                 >
                   <div>
                     {/* Header: Flag, Name, Code */}
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-3xl leading-none select-none">{flag}</span>
+                        <span className="text-2xl leading-none select-none">{flag}</span>
                         <div>
-                          <h3 className="font-bold text-white text-sm tracking-tight leading-tight group-hover:text-cyan-300 transition-colors">
+                          <h3 className="font-semibold text-white text-sm tracking-tight leading-tight">
                             {name}
                           </h3>
-                          <span className="text-[11px] font-mono text-slate-400 font-semibold">
+                          <span className="text-[10px] font-mono text-[#A3A3A3]">
                             {country.code}
                           </span>
                         </div>
                       </div>
-                      <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                      <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-[#161616] text-[#0073F5] border border-[#2B2B2B]">
                         {country.count}
                       </span>
                     </div>
@@ -412,33 +412,33 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                     {/* Protocol Breakdown Badges */}
                     <div className="flex flex-wrap gap-1.5 my-3">
                       {country.protocols.http > 0 && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#161616] text-[#A3A3A3] border border-[#2B2B2B]">
                           HTTP: {country.protocols.http}
                         </span>
                       )}
                       {country.protocols.https > 0 && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#161616] text-[#0073F5] border border-[#2B2B2B]">
                           HTTPS: {country.protocols.https}
                         </span>
                       )}
                       {country.protocols.socks4 > 0 && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#161616] text-[#A3A3A3] border border-[#2B2B2B]">
                           S4: {country.protocols.socks4}
                         </span>
                       )}
                       {country.protocols.socks5 > 0 && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#161616] text-[#9E9EFF] border border-[#2B2B2B]">
                           S5: {country.protocols.socks5}
                         </span>
                       )}
                     </div>
 
                     {/* Sample Preview */}
-                    <div className="bg-slate-950/70 p-2 rounded-lg border border-white/5 mb-3">
-                      <div className="text-[10px] text-slate-500 font-mono mb-1 uppercase tracking-wider">
+                    <div className="bg-[#161616] p-2.5 rounded-md border border-[#2B2B2B] mb-3">
+                      <div className="text-[9px] text-[#666666] font-mono mb-1 uppercase tracking-wider">
                         Sample Endpoints {selectedProtocol !== "all" ? `(${selectedProtocol.toUpperCase()})` : ""}
                       </div>
-                      <div className="font-mono text-[11px] text-slate-300 space-y-0.5">
+                      <div className="font-mono text-[11px] text-[#A3A3A3] space-y-0.5">
                         {displayProxies.slice(0, 2).map((p, i) => (
                           <div key={i} className="truncate">
                             {p}
@@ -449,13 +449,13 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                  <div className="pt-3 border-t border-[#2B2B2B] flex items-center justify-between gap-2">
                     <button
                       onClick={() => {
                         setSelectedCountryCode(country.code);
                         setActiveTab("proxies");
                       }}
-                      className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1"
+                      className="text-xs text-[#0073F5] hover:text-[#66AEFF] font-medium flex items-center gap-1 font-mono"
                     >
                       <span>Inspect</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -475,7 +475,7 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                       />
                       <button
                         onClick={() => downloadCountry(country.code)}
-                        className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-colors"
+                        className="p-1.5 rounded-md bg-[#161616] hover:bg-[#252525] text-[#A3A3A3] hover:text-white border border-[#2B2B2B] transition-colors"
                         title="Download Country .txt"
                       >
                         <Download className="w-3.5 h-3.5" />
@@ -489,20 +489,20 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
         </div>
       ) : (
         /* Proxy Inspector Table View */
-        <div className="glass-panel rounded-2xl border border-white/10 overflow-hidden">
+        <div className="bg-[#1C1C1C] rounded-lg border border-[#2B2B2B] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-slate-950/80 border-b border-white/10 text-slate-400 uppercase font-mono text-[10px] tracking-wider">
-                  <th className="py-3 px-4">Proxy Endpoint</th>
-                  <th className="py-3 px-4">Country</th>
+                <tr className="bg-[#161616] border-b border-[#2B2B2B] text-[#A3A3A3] uppercase font-mono text-[10px] tracking-wider">
+                  <th className="py-3 px-4">Subnet Endpoint</th>
+                  <th className="py-3 px-4">Region</th>
                   <th className="py-3 px-4">Protocol</th>
                   <th className="py-3 px-4">Anonymity</th>
                   <th className="py-3 px-4">Latency</th>
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#2B2B2B]">
                 {filteredProxies.slice(0, 100).map((proxy, idx) => {
                   const flag = getCountryFlag(proxy.country);
                   const isLowLatency = proxy.latency < 250;
@@ -511,32 +511,32 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                   return (
                     <tr
                       key={idx}
-                      className="hover:bg-white/[0.03] transition-colors font-mono text-slate-300"
+                      className="hover:bg-[#161616] transition-colors font-mono text-[#A3A3A3]"
                     >
                       <td className="py-3 px-4 font-semibold text-white">
-                        <span className="text-cyan-300">{proxy.ip}</span>
-                        <span className="text-slate-500">:</span>
-                        <span className="text-emerald-400">{proxy.port}</span>
+                        <span className="text-white">{proxy.ip}</span>
+                        <span className="text-[#666666]">:</span>
+                        <span className="text-[#0073F5]">{proxy.port}</span>
                       </td>
 
                       <td className="py-3 px-4 font-sans">
                         <div className="flex items-center gap-2">
                           <span className="text-base">{flag}</span>
-                          <span className="text-xs text-slate-300">{getCountryName(proxy.country)}</span>
-                          <span className="text-[10px] font-mono text-slate-500">({proxy.country})</span>
+                          <span className="text-xs text-white">{getCountryName(proxy.country)}</span>
+                          <span className="text-[10px] font-mono text-[#666666]">({proxy.country})</span>
                         </div>
                       </td>
 
                       <td className="py-3 px-4">
                         <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                          className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider ${
                             proxy.protocol === "https"
-                              ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
+                              ? "bg-[#161616] text-[#0073F5] border border-[#2B2B2B]"
                               : proxy.protocol === "socks5"
-                              ? "bg-purple-500/15 text-purple-300 border border-purple-500/30"
+                              ? "bg-[#161616] text-[#9E9EFF] border border-[#2B2B2B]"
                               : proxy.protocol === "socks4"
-                              ? "bg-amber-500/15 text-amber-300 border border-amber-500/30"
-                              : "bg-blue-500/15 text-blue-300 border border-blue-500/30"
+                              ? "bg-[#161616] text-[#A3A3A3] border border-[#2B2B2B]"
+                              : "bg-[#161616] text-[#66AEFF] border border-[#2B2B2B]"
                           }`}
                         >
                           {proxy.protocol}
@@ -544,15 +544,7 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                       </td>
 
                       <td className="py-3 px-4">
-                        <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-semibold capitalize ${
-                            proxy.anonymity === "elite"
-                              ? "bg-emerald-500/10 text-emerald-400"
-                              : proxy.anonymity === "anonymous"
-                              ? "bg-amber-500/10 text-amber-400"
-                              : "bg-slate-700/40 text-slate-400"
-                          }`}
-                        >
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono text-[#A3A3A3] bg-[#161616] border border-[#2B2B2B] capitalize">
                           {proxy.anonymity}
                         </span>
                       </td>
@@ -562,10 +554,10 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
                           <span
                             className={`font-mono text-xs font-bold ${
                               isLowLatency
-                                ? "text-emerald-400"
+                                ? "text-[#0073F5]"
                                 : isMediumLatency
-                                ? "text-cyan-400"
-                                : "text-amber-400"
+                                ? "text-[#66AEFF]"
+                                : "text-[#FF0000]"
                             }`}
                           >
                             {proxy.latency} ms
@@ -594,16 +586,16 @@ export function ProxyExplorer({ initialCountries, allProxies, summary }: ProxyEx
             </table>
 
             {filteredProxies.length === 0 && (
-              <div className="p-12 text-center text-slate-500">
+              <div className="p-12 text-center text-[#666666]">
                 <Globe className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p className="text-sm font-semibold text-slate-400">No proxies matched your current filters.</p>
-                <p className="text-xs text-slate-500 mt-1">Try increasing max latency or switching protocol filters.</p>
+                <p className="text-sm font-semibold text-[#A3A3A3]">No proxies matched your current filters.</p>
+                <p className="text-xs text-[#666666] mt-1">Try increasing max latency or switching protocol filters.</p>
               </div>
             )}
 
             {filteredProxies.length > 100 && (
-              <div className="p-3 bg-slate-950/60 border-t border-white/5 text-center text-xs text-slate-400">
-                Showing top 100 of {filteredProxies.length} proxies. Use "Download .txt" or "Copy Filtered" above for the full list.
+              <div className="p-3 bg-[#161616] border-t border-[#2B2B2B] text-center text-xs text-[#A3A3A3] font-mono">
+                Showing top 100 of {filteredProxies.length} proxies. Use &quot;Download .txt&quot; or &quot;Copy Filtered&quot; above for the full list.
               </div>
             )}
           </div>
