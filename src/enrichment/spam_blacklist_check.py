@@ -43,7 +43,10 @@ class SpamBlacklistChecker:
         return await self._check_dnsbl(proxy.ip)
 
     async def _check_dnsbl(self, ip: str) -> bool:
-        reversed_ip = ".".join(reversed(ip.split(".")))
+        parts = ip.strip().split(".")
+        if len(parts) != 4 or not all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
+            return False
+        reversed_ip = ".".join(reversed(parts))
         tasks = [
             self._query_dnsbl(server, reversed_ip) for server in DNSBL_SERVERS
         ]
@@ -56,11 +59,22 @@ class SpamBlacklistChecker:
     async def _query_dnsbl(self, dnsbl_server: str, reversed_ip: str) -> bool:
         query = f"{reversed_ip}.{dnsbl_server}"
         try:
-            await asyncio.wait_for(
+            addr_info = await asyncio.wait_for(
                 asyncio.get_running_loop().getaddrinfo(query, None, family=socket.AF_INET),
                 timeout=self._timeout,
             )
-            return True
+            if not addr_info:
+                return False
+            # Filter out open resolver rejection / query error responses (e.g. 127.255.255.X from Spamhaus)
+            # A valid DNSBL listing response must be in 127.0.0.0/8 and not in 127.255.255.0/24
+            valid_listed = [
+                entry[4][0]
+                for entry in addr_info
+                if entry[4]
+                and entry[4][0].startswith("127.")
+                and not entry[4][0].startswith("127.255.255.")
+            ]
+            return len(valid_listed) > 0
         except (asyncio.TimeoutError, socket.gaierror, OSError):
             return False
 

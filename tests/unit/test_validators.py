@@ -94,3 +94,82 @@ def test_token_bucket_rate_limits() -> None:
     elapsed = asyncio.run(run())
     # 2 burst tokens are free; the remaining 2 wait ~0.1s each.
     assert elapsed >= 0.15
+
+
+@pytest.mark.asyncio
+async def test_https_proxy_scheme_normalization() -> None:
+    import importlib
+    anon_mod = importlib.import_module("src.validators.03_anonymity_check")
+    lat_mod = importlib.import_module("src.validators.04_latency_tester")
+
+    p = Proxy(ip="1.2.3.4", port=8443, protocol=Protocol.HTTPS)
+    sess_anon, req_anon = anon_mod._build_session(p, 5.0)
+    sess_lat, req_lat = lat_mod._build_session(p, 5.0)
+    await sess_anon.close()
+    await sess_lat.close()
+
+    assert req_anon == "http://1.2.3.4:8443"
+    assert req_lat == "http://1.2.3.4:8443"
+
+
+@pytest.mark.asyncio
+async def test_dnsbl_ignores_open_resolver_responses(monkeypatch: pytest.MonkeyPatch) -> None:
+    from src.enrichment.spam_blacklist_check import SpamBlacklistChecker
+    checker = SpamBlacklistChecker(enabled=True)
+
+    # Simulate getaddrinfo returning 127.255.255.254 (Spamhaus open-resolver rejection)
+    async def fake_getaddrinfo(host: str, port: int, family: int = 0) -> list:
+        return [(2, 1, 0, "", ("127.255.255.254", 0))]
+
+    loop = asyncio.get_running_loop()
+    monkeypatch.setattr(loop, "getaddrinfo", fake_getaddrinfo)
+
+    is_listed = await checker._query_dnsbl("zen.spamhaus.org", "4.3.2.1")
+    assert is_listed is False
+
+
+@pytest.mark.asyncio
+async def test_dnsbl_ignores_hijacked_public_nxdomain(monkeypatch: pytest.MonkeyPatch) -> None:
+    from src.enrichment.spam_blacklist_check import SpamBlacklistChecker
+    checker = SpamBlacklistChecker(enabled=True)
+
+    # Simulate getaddrinfo returning an ISP NXDOMAIN hijack public IP (not 127.0.0.0/8)
+    async def fake_getaddrinfo(host: str, port: int, family: int = 0) -> list:
+        return [(2, 1, 0, "", ("92.242.140.21", 0))]
+
+    loop = asyncio.get_running_loop()
+    monkeypatch.setattr(loop, "getaddrinfo", fake_getaddrinfo)
+
+    is_listed = await checker._query_dnsbl("zen.spamhaus.org", "4.3.2.1")
+    assert is_listed is False
+
+
+@pytest.mark.asyncio
+async def test_dnsbl_rejects_invalid_ip() -> None:
+    from src.enrichment.spam_blacklist_check import SpamBlacklistChecker
+    checker = SpamBlacklistChecker(enabled=True)
+    assert await checker._check_dnsbl("invalid.ip") is False
+    assert await checker._check_dnsbl("2001:db8::1") is False
+
+
+def test_geo_locator_city_and_country_databases() -> None:
+    import importlib
+    geo_mod = importlib.import_module("src.validators.05_geo_locator")
+    city_db = "data/geoip/GeoLite2-City.mmdb"
+    country_db = "data/geoip/GeoLite2-Country.mmdb"
+
+    p = Proxy(ip="8.8.8.8", port=80, protocol=Protocol.HTTP)
+    # Test City DB locate
+    locator_city = geo_mod.GeoLocator(country_db, city_db)
+    code, name, city = locator_city.locate(p)
+    assert code == "US"
+    assert name == "United States"
+
+    # Test Country DB locate
+    locator_country = geo_mod.GeoLocator(country_db)
+    code_c, name_c, city_c = locator_country.locate(p)
+    assert code_c == "US"
+    assert name_c == "United States"
+    assert city_c is None
+
+

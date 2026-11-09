@@ -30,6 +30,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Download GeoIP Databases
+        env:
+          MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
+        run: |
+          mkdir -p data/geoip
+          python scripts/update_geoip_db.py || ( \
+            curl -f -sSL "https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-Country.mmdb" -o "data/geoip/GeoLite2-Country.mmdb" && \
+            curl -f -sSL "https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb" -o "data/geoip/GeoLite2-City.mmdb" && \
+            curl -f -sSL "https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb" -o "data/geoip/GeoLite2-ASN.mmdb" \
+          ) || true
+
       - name: Run collector pipeline
         run: python -m src.main run --log-level INFO
 

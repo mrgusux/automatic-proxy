@@ -51,16 +51,21 @@ class GeoLocator:
     def locate(self, proxy: Proxy) -> tuple[str | None, str | None, str | None]:
         if self._reader is not None:
             try:
-                response = self._reader.country(proxy.ip)
-                code = response.country.iso_code
-                name = response.country.name
-                city = None
                 if self._has_city:
-                    try:
-                        city = response.city.names.get("en")
-                    except Exception:
-                        pass
-                return code, name, city
+                    response = self._reader.city(proxy.ip)
+                    code = response.country.iso_code
+                    name = response.country.name
+                    city = (
+                        response.city.names.get("en")
+                        if response.city and response.city.names
+                        else None
+                    )
+                    return code, name, city
+                else:
+                    response = self._reader.country(proxy.ip)
+                    code = response.country.iso_code
+                    name = response.country.name
+                    return code, name, None
             except Exception:
                 pass
         return None, None, None

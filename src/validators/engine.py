@@ -125,10 +125,10 @@ class VerificationEngine:
     def _resolve_geo(self, proxy: Proxy) -> tuple[str | None, str | None, str | None]:
         if self._cache is not None:
             cached = self._cache.get(proxy.ip)
-            if cached is not None:
+            if cached is not None and cached.get("code") is not None:
                 return cached.get("code"), cached.get("name"), cached.get("city")
         code, name, city = self._geo.locate(proxy)
-        if self._cache is not None:
+        if self._cache is not None and code is not None:
             self._cache.set(proxy.ip, {"code": code, "name": name, "city": city})
         return code, name, city
 
@@ -148,10 +148,14 @@ class VerificationEngine:
             code, name, city = results.get(p.ip, (None, None, None))
             if code:
                 p.country_code = code
+                if self._cache is not None:
+                    self._cache.set(p.ip, {"code": code, "name": name, "city": city})
             if name:
                 p.country_name = name
             if city:
                 p.city = city
+        if self._cache is not None:
+            self._cache.flush()
 
     async def verify_all(self, proxies: list[Proxy]) -> list[Proxy]:
         logger.info("Verifying %d proxies (concurrency-bounded)", len(proxies))
@@ -162,11 +166,12 @@ class VerificationEngine:
 
         verified = await self._pool.map(self._verify_one, proxies)
         self._geo.close()
-        if self._cache is not None:
-            self._cache.flush()
 
         alive = [p for p in verified if p.is_alive]
         await self._apply_api_geo(alive)
+
+        if self._cache is not None:
+            self._cache.flush()
 
         return verified
 

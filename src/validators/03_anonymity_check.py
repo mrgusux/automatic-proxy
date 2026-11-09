@@ -45,7 +45,8 @@ def _build_session(
         connector: Any = ProxyConnector.from_url(proxy.address)
         return aiohttp.ClientSession(connector=connector, timeout=client_timeout), None
     connector = aiohttp.TCPConnector(ssl=False)
-    return aiohttp.ClientSession(connector=connector, timeout=client_timeout), proxy.address
+    proxy_url = f"http://{proxy.ip}:{proxy.port}"
+    return aiohttp.ClientSession(connector=connector, timeout=client_timeout), proxy_url
 
 
 def _detect_software(body: str, headers: dict[str, str]) -> str | None:

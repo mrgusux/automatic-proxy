@@ -25,18 +25,20 @@ data/cache/*
 # GeoIP databases
 data/geoip/*.mmdb
 
-# Outputs (track only folder skeleton by default)
+# Outputs
 outputs/**
 !outputs/
 !outputs/.gitkeep
+!outputs/*.txt
+!outputs/*.json
 !outputs/by_country/
-!outputs/by_country/.gitkeep
+!outputs/by_country/**
 !outputs/by_protocol/
-!outputs/by_protocol/.gitkeep
+!outputs/by_protocol/**
 !outputs/by_anonymity/
-!outputs/by_anonymity/.gitkeep
+!outputs/by_anonymity/**
 !outputs/metadata/
-!outputs/metadata/.gitkeep
+!outputs/metadata/**
 
 # OS
 .DS_Store

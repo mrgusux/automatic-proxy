@@ -300,26 +300,7 @@ sources:
     default_protocol: socks5
     enabled: true
 
-  # ------------------------------------------------------------------
-  # yemixzy / proxy-list
-  # ------------------------------------------------------------------
-  - name: yemixzy_http
-    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/http.txt
-    scraper_type: github_raw
-    default_protocol: http
-    enabled: true
 
-  - name: yemixzy_socks4
-    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks4.txt
-    scraper_type: github_raw
-    default_protocol: socks4
-    enabled: true
-
-  - name: yemixzy_socks5
-    url: https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxies/socks5.txt
-    scraper_type: github_raw
-    default_protocol: socks5
-    enabled: true
 
   # ------------------------------------------------------------------
   # vakhov / fresh-proxy-list

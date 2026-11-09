@@ -46,6 +46,13 @@ def test_segmented_builder_country_folder_structure(tmp_path: Path) -> None:
     assert bd_dir.exists()
     assert us_dir.exists()
 
+    # Flat consumer-friendly country files
+    assert (tmp_path / "by_country" / "BD.txt").exists()
+    assert (tmp_path / "by_country" / "US.txt").exists()
+    assert (tmp_path / "by_country" / "BD_http.txt").exists()
+    assert (tmp_path / "by_country" / "BD_socks5.txt").exists()
+    assert (tmp_path / "by_country" / "US_socks4.txt").exists()
+
     # Country main file
     assert (bd_dir / "BD_all.txt").exists()
     assert (us_dir / "US_all.txt").exists()

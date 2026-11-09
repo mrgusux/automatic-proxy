@@ -25,6 +25,10 @@ async def _probe_socks5(ip: str, port: int, timeout: float) -> bool:
         return False
     finally:
         writer.close()
+        try:
+            await writer.wait_closed()
+        except Exception:
+            pass
 
 
 async def _probe_socks4(ip: str, port: int, timeout: float) -> bool:
@@ -44,6 +48,10 @@ async def _probe_socks4(ip: str, port: int, timeout: float) -> bool:
         return False
     finally:
         writer.close()
+        try:
+            await writer.wait_closed()
+        except Exception:
+            pass
 
 
 async def detect_protocol(proxy: Proxy, timeout: float = 5.0) -> Protocol:

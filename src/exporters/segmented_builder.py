@@ -51,21 +51,15 @@ class SegmentedBuilder:
         logger.info("Segmented export done. countries=%d proxies=%d", len(country_groups), len(proxies))
 
     def _prepare_directories(self) -> None:
-        if self._by_country_dir.exists():
-            shutil.rmtree(self._by_country_dir)
-        if self._by_protocol_dir.exists():
-            shutil.rmtree(self._by_protocol_dir)
-        if self._by_anonymity_dir.exists():
-            shutil.rmtree(self._by_anonymity_dir)
-
         self._by_country_dir.mkdir(parents=True, exist_ok=True)
         self._by_protocol_dir.mkdir(parents=True, exist_ok=True)
         self._by_anonymity_dir.mkdir(parents=True, exist_ok=True)
 
-        for legacy in self._by_country_dir.glob("*.txt"):
-            self._safe_unlink(legacy)
-
     def _write_country_folder(self, country_code: str, proxies: list[Proxy]) -> None:
+        # Flat consumer-friendly files: outputs/by_country/{CC}.txt
+        flat_path = self._by_country_dir / f"{country_code}.txt"
+        atomic_write_text(flat_path, "\n".join([p.line() for p in proxies]) + "\n")
+
         folder = self._by_country_dir / f"{country_code}_proxies"
         folder.mkdir(parents=True, exist_ok=True)
 
@@ -79,6 +73,7 @@ class SegmentedBuilder:
 
         for proto, items in protocol_groups.items():
             atomic_write_text(folder / f"{proto}.txt", "\n".join([x.line() for x in items]) + "\n")
+            atomic_write_text(self._by_country_dir / f"{country_code}_{proto}.txt", "\n".join([x.line() for x in items]) + "\n")
 
         keep_alive = [p.line() for p in proxies if p.keep_alive]
         if keep_alive:
