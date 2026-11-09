@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🛰️ Ultimate God-Tier Automated Proxy Collector
+# 🛰️ Automatic Proxy
 
-**High-concurrency, fully automated public proxy collector — purpose-built for GitHub Actions.**
+**High-concurrency, fully automated public proxy collector & 5-dimension validation engine.**
 
 Scrapes 100+ publicly shared proxy sources, validates them across **5 dimensions**,
 enriches metadata, and exports clean, deduplicated, ready-to-use lists — every 3 hours,
